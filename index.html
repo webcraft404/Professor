@@ -110,15 +110,43 @@
     .bg-texture {
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
     }
+    /* Booking modal */
+    .booking-modal-backdrop {
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(6px);
+    }
+    .booking-modal-panel {
+      animation: modalIn 0.35s ease-out;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .booking-step { display: none; }
+    .booking-step.is-active { display: block; animation: stepIn 0.3s ease-out; }
+    @keyframes stepIn {
+      from { opacity: 0; transform: translateX(12px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    .calendar-day {
+      transition: background 0.2s, color 0.2s;
+    }
+    .calendar-day:not(.disabled):not(.past):hover { background: rgba(245,245,240,0.1); }
+    .calendar-day.selected { background: var(--copper); color: var(--charcoal); }
+    .calendar-day.disabled, .calendar-day.past { opacity: 0.4; cursor: not-allowed; }
+    .time-slot { transition: background 0.2s, border-color 0.2s; }
+    .time-slot:not(.taken):hover { border-color: var(--copper); background: rgba(184,134,11,0.15); }
+    .time-slot.selected { border-color: var(--copper); background: rgba(184,134,11,0.25); color: var(--cream); }
+    .time-slot.taken { opacity: 0.45; cursor: not-allowed; }
   </style>
 </head>
 <body class="antialiased min-h-screen bg-texture">
   <!-- Navigation -->
   <header id="nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 px-6 md:px-12">
     <nav class="max-w-6xl mx-auto flex items-center justify-between">
-      <a href="#book" class="btn-book px-6 py-2.5 rounded-sm font-semibold text-sm tracking-wide text-cream border border-copper/50 hidden md:inline-block">
+      <button type="button" data-booking-open class="btn-book px-6 py-2.5 rounded-sm font-semibold text-sm tracking-wide text-cream border border-copper/50 hidden md:inline-block">
         הזמן תור
-      </a>
+      </button>
       <ul class="hidden md:flex items-center gap-6 md:gap-12">
         <li><a href="#hours" class="text-cream/85 hover:text-copper transition-colors text-sm font-medium">שעות פעילות</a></li>
         <li><a href="#gallery" class="text-cream/85 hover:text-copper transition-colors text-sm font-medium">גלריה</a></li>
@@ -130,7 +158,7 @@
       </button>
     </nav>
     <div id="mobile-menu" class="hidden md:hidden mt-4 py-4 border-t border-cream/10">
-      <a href="#book" class="btn-book block text-center w-full py-3 rounded-sm font-semibold text-cream mb-4">הזמן תור</a>
+      <button type="button" data-booking-open class="btn-book block text-center w-full py-3 rounded-sm font-semibold text-cream mb-4">הזמן תור</button>
       <ul class="space-y-3 text-center">
         <li><a href="#services" class="block text-cream/85 hover:text-copper">שירותים</a></li>
         <li><a href="#gallery" class="block text-cream/85 hover:text-copper">גלריה</a></li>
@@ -150,9 +178,9 @@
       <p class="text-cream/90 text-lg md:text-xl font-light mb-10 max-w-2xl mx-auto">
         דיוק, סטייל וחוויית גילוח מסורתית בלב חולון
       </p>
-      <a href="#book" class="btn-book inline-block px-10 py-4 rounded-sm font-bold text-cream text-lg tracking-wide">
+      <button type="button" data-booking-open class="btn-book inline-block px-10 py-4 rounded-sm font-bold text-cream text-lg tracking-wide">
         הזמן תור
-      </a>
+      </button>
     </div>
     <div class="absolute bottom-8 left-1/2 -translate-x-1/2 w-8 h-12 border border-cream/40 rounded-full flex items-start justify-center p-2 animate-bounce">
       <span class="w-1 h-2 bg-cream/60 rounded-full"></span>
@@ -172,7 +200,7 @@
               <h3 class="text-xl font-bold text-cream mb-2">תספורת גברית</h3>
               <p class="text-cream/75 font-light text-sm md:text-base">תספורת מקצועית בהתאמה אישית – קלאסית או מודרנית, עם ייעוץ סטייל.</p>
             </div>
-            <span class="text-copper font-bold text-xl whitespace-nowrap">₪80</span>
+            <button type="button" data-booking-open class="text-copper font-bold text-xl whitespace-nowrap hover:underline focus:outline-none">₪80</button>
           </div>
           <div class="divider-copper mt-6"></div>
         </div>
@@ -183,7 +211,7 @@
               <h3 class="text-xl font-bold text-cream mb-2">עיצוב זקן</h3>
               <p class="text-cream/75 font-light text-sm md:text-base">גילוח וטיפוח זקן עם תער ומכונה – קווים חדים ומראה מטופח.</p>
             </div>
-            <span class="text-copper font-bold text-xl whitespace-nowrap">₪50</span>
+            <button type="button" data-booking-open class="text-copper font-bold text-xl whitespace-nowrap hover:underline focus:outline-none">₪50</button>
           </div>
           <div class="divider-copper mt-6"></div>
         </div>
@@ -194,7 +222,7 @@
               <h3 class="text-xl font-bold text-cream mb-2">גילוח מסורתי</h3>
               <p class="text-cream/75 font-light text-sm md:text-base">חוויית גילוח אולד סקול עם תער חם, קרם ומגבת חמה – רגע של פינוק.</p>
             </div>
-            <span class="text-copper font-bold text-xl whitespace-nowrap">₪120</span>
+            <button type="button" data-booking-open class="text-copper font-bold text-xl whitespace-nowrap hover:underline focus:outline-none">₪120</button>
           </div>
           <div class="divider-copper mt-6"></div>
         </div>
@@ -205,7 +233,7 @@
               <h3 class="text-xl font-bold text-cream mb-2">חבילת טיפוח מלאה</h3>
               <p class="text-cream/75 font-light text-sm md:text-base">תספורת, עיצוב זקן וגילוח מסורתי – החבילה המלאה לג'נטלמן.</p>
             </div>
-            <span class="text-copper font-bold text-xl whitespace-nowrap">₪220</span>
+            <button type="button" data-booking-open class="text-copper font-bold text-xl whitespace-nowrap hover:underline focus:outline-none">₪220</button>
           </div>
         </div>
       </div>
@@ -286,12 +314,86 @@
     <div class="max-w-2xl mx-auto text-center">
       <h2 class="text-3xl md:text-4xl font-bold text-cream mb-4">הזמן תור עכשיו</h2>
       <p class="text-cream/70 mb-10 font-light">צרו קשר להזמנת מועד או לשאלות</p>
-      <a href="tel:0500000000" class="btn-book inline-block px-10 py-4 rounded-sm font-bold text-cream text-lg tracking-wide mb-4">
+      <button type="button" data-booking-open class="btn-book inline-block px-10 py-4 rounded-sm font-bold text-cream text-lg tracking-wide mb-4">
         הזמן תור
-      </a>
+      </button>
       <p class="text-cream/50 text-sm">או התקשרו: <a href="tel:0500000000" class="text-copper hover:underline">050-000-0000</a></p>
     </div>
   </section>
+
+  <!-- Booking Modal -->
+  <div id="booking-modal" class="fixed inset-0 z-[100] hidden" aria-hidden="true">
+    <div class="booking-modal-backdrop absolute inset-0" data-booking-close></div>
+    <div class="absolute inset-0 flex items-center justify-center p-4 overflow-y-auto">
+      <div class="booking-modal-panel relative w-full max-w-lg bg-charcoal border border-cream/20 rounded-sm shadow-2xl my-8" role="dialog" aria-labelledby="booking-title" aria-modal="true">
+        <button type="button" data-booking-close class="absolute top-4 left-4 text-cream/60 hover:text-cream transition-colors p-1" aria-label="סגור">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+        <div class="p-6 pt-12">
+          <h2 id="booking-title" class="text-2xl font-bold text-cream mb-6 text-center">הזמנת תור</h2>
+
+          <!-- Step 1: Calendar -->
+          <div id="booking-step-1" class="booking-step is-active">
+            <p class="text-cream/70 text-sm mb-4">בחר תאריך</p>
+            <div class="flex justify-between items-center mb-4">
+              <button type="button" id="booking-cal-prev" class="p-2 text-cream/80 hover:text-copper transition-colors rounded" aria-label="חודש קודם">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+              </button>
+              <span id="booking-month-year" class="font-semibold text-cream"></span>
+              <button type="button" id="booking-cal-next" class="p-2 text-cream/80 hover:text-copper transition-colors rounded" aria-label="חודש הבא">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+              </button>
+            </div>
+            <div id="booking-calendar" class="grid grid-cols-7 gap-1 text-center text-sm"></div>
+            <button type="button" id="booking-step1-next" disabled class="mt-6 w-full py-3 rounded-sm font-semibold bg-cream/10 text-cream/50 border border-cream/20 cursor-not-allowed">המשך לבחירת שעה</button>
+          </div>
+
+          <!-- Step 2: Time slots -->
+          <div id="booking-step-2" class="booking-step">
+            <p class="text-cream/70 text-sm mb-2">תאריך: <span id="booking-selected-date-label" class="text-cream font-medium"></span></p>
+            <p class="text-cream/70 text-sm mb-4">בחר שעה</p>
+            <div id="booking-times" class="grid grid-cols-3 sm:grid-cols-4 gap-2"></div>
+            <div class="flex gap-3 mt-6">
+              <button type="button" id="booking-step2-back" class="flex-1 py-3 rounded-sm font-semibold border border-cream/30 text-cream hover:bg-cream/10 transition-colors">חזרה</button>
+              <button type="button" id="booking-step2-next" disabled class="flex-1 py-3 rounded-sm font-semibold bg-cream/10 text-cream/50 border border-cream/20 cursor-not-allowed">המשך לפרטים</button>
+            </div>
+          </div>
+
+          <!-- Step 3: Form -->
+          <div id="booking-step-3" class="booking-step">
+            <p class="text-cream/70 text-sm mb-4">תור: <span id="booking-summary-datetime" class="text-cream font-medium"></span></p>
+            <form id="booking-form" class="space-y-4">
+              <div>
+                <label for="booking-name" class="block text-cream/80 text-sm mb-1">שם מלא</label>
+                <input type="text" id="booking-name" name="name" required class="w-full px-4 py-3 bg-cream/5 border border-cream/20 rounded-sm text-cream placeholder-cream/40 focus:border-copper focus:outline-none transition-colors" placeholder="שם מלא" dir="rtl" />
+              </div>
+              <div>
+                <label for="booking-phone" class="block text-cream/80 text-sm mb-1">מספר טלפון</label>
+                <input type="tel" id="booking-phone" name="phone" required class="w-full px-4 py-3 bg-cream/5 border border-cream/20 rounded-sm text-cream placeholder-cream/40 focus:border-copper focus:outline-none transition-colors" placeholder="050-0000000" dir="ltr" />
+              </div>
+              <div>
+                <label for="booking-email" class="block text-cream/80 text-sm mb-1">כתובת אימייל</label>
+                <input type="email" id="booking-email" name="email" required class="w-full px-4 py-3 bg-cream/5 border border-cream/20 rounded-sm text-cream placeholder-cream/40 focus:border-copper focus:outline-none transition-colors" placeholder="email@example.com" dir="ltr" />
+              </div>
+            </form>
+            <div class="flex gap-3 mt-6">
+              <button type="button" id="booking-step3-back" class="flex-1 py-3 rounded-sm font-semibold border border-cream/30 text-cream hover:bg-cream/10 transition-colors">חזרה</button>
+              <button type="submit" id="booking-submit" form="booking-form" class="btn-book flex-1 py-3 rounded-sm font-bold text-cream border border-copper/50">
+                אישור תור
+              </button>
+            </div>
+          </div>
+
+          <!-- Success message -->
+          <div id="booking-success" class="booking-step text-center py-4">
+            <p class="text-cream font-medium mb-2">התור נשמר בהצלחה.</p>
+            <p class="text-cream/70 text-sm">נשלח אליך אימייל לאישור עם קישור להוספה ללוח השנה.</p>
+            <button type="button" data-booking-close class="mt-6 btn-book px-8 py-3 rounded-sm font-semibold text-cream">סגור</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Footer -->
   <footer class="py-12 px-6 md:px-12 border-t border-cream/10">
@@ -328,6 +430,224 @@
           a.addEventListener('click', function () { mobileMenu.classList.add('hidden'); });
         });
       }
+    })();
+  </script>
+  <script>
+    (function () {
+      var HE_DAYS = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ש'];
+      var HE_MONTHS = ['ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני', 'יולי', 'אוגוסט', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'];
+      var MOCK_BOOKED = [
+        '2026-02-23T10:00', '2026-02-23T10:30', '2026-02-23T14:00',
+        '2026-02-24T11:00', '2026-02-24T16:00',
+        '2026-02-25T09:30', '2026-02-25T15:00'
+      ];
+      var today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      function dayOfWeek(d) { return d.getDay(); }
+      function isSaturday(d) { return dayOfWeek(d) === 6; }
+      function isFriday(d) { return dayOfWeek(d) === 5; }
+      function getHoursForDate(d) {
+        if (isSaturday(d)) return null;
+        if (isFriday(d)) return { start: 9, end: 15 };
+        return { start: 10, end: 20 };
+      }
+      function isPastDate(d) {
+        var t = new Date(d);
+        t.setHours(0, 0, 0, 0);
+        return t < today;
+      }
+      function dateKey(d) {
+        var y = d.getFullYear(), m = String(d.getMonth() + 1).padStart(2, '0'), day = String(d.getDate()).padStart(2, '0');
+        return y + '-' + m + '-' + day;
+      }
+      function slotKey(d, hour, min) {
+        return dateKey(d) + 'T' + String(hour).padStart(2, '0') + ':' + String(min).padStart(2, '0');
+      }
+      function isSlotBooked(d, hour, min) {
+        return MOCK_BOOKED.indexOf(slotKey(d, hour, min)) !== -1;
+      }
+
+      var modal = document.getElementById('booking-modal');
+      var step1 = document.getElementById('booking-step-1');
+      var step2 = document.getElementById('booking-step-2');
+      var step3 = document.getElementById('booking-step-3');
+      var successEl = document.getElementById('booking-success');
+      var calEl = document.getElementById('booking-calendar');
+      var monthYearEl = document.getElementById('booking-month-year');
+      var timesEl = document.getElementById('booking-times');
+      var selectedDateLabel = document.getElementById('booking-selected-date-label');
+      var summaryDatetime = document.getElementById('booking-summary-datetime');
+      var step1Next = document.getElementById('booking-step1-next');
+      var step2Next = document.getElementById('booking-step2-next');
+      var form = document.getElementById('booking-form');
+
+      var state = { viewMonth: new Date(), selectedDate: null, selectedTime: null };
+
+      function openModal() {
+        state.viewMonth = new Date();
+        state.selectedDate = null;
+        state.selectedTime = null;
+        if (state.viewMonth.getMonth() === today.getMonth() && state.viewMonth.getFullYear() === today.getFullYear()) {
+          state.viewMonth.setDate(today.getDate());
+        }
+        step1.classList.add('is-active');
+        step2.classList.remove('is-active');
+        step3.classList.remove('is-active');
+        successEl.classList.remove('is-active');
+        step1Next.disabled = true;
+        step1Next.className = 'mt-6 w-full py-3 rounded-sm font-semibold bg-cream/10 text-cream/50 border border-cream/20 cursor-not-allowed';
+        renderCalendar();
+        modal.classList.remove('hidden');
+        modal.setAttribute('aria-hidden', 'false');
+      }
+      function closeModal() {
+        modal.classList.add('hidden');
+        modal.setAttribute('aria-hidden', 'true');
+      }
+      function goToStep(n) {
+        step1.classList.remove('is-active');
+        step2.classList.remove('is-active');
+        step3.classList.remove('is-active');
+        successEl.classList.remove('is-active');
+        if (n === 1) step1.classList.add('is-active');
+        if (n === 2) { step2.classList.add('is-active'); renderTimeSlots(); }
+        if (n === 3) {
+          step3.classList.add('is-active');
+          var d = state.selectedDate;
+          summaryDatetime.textContent = dateKey(d) + ' ' + (state.selectedTime ? state.selectedTime.slice(11, 16) : '');
+        }
+        if (n === 'success') successEl.classList.add('is-active');
+      }
+
+      function renderCalendar() {
+        var y = state.viewMonth.getFullYear(), m = state.viewMonth.getMonth();
+        monthYearEl.textContent = HE_MONTHS[m] + ' ' + y;
+        var first = new Date(y, m, 1);
+        var start = new Date(first);
+        var dow = first.getDay();
+        start.setDate(start.getDate() - dow);
+        var end = new Date(y, m + 1, 0);
+        var lastDay = end.getDate();
+        var cells = [];
+        var i, d, key, hours, disabled, past, selected;
+        for (i = 0; i < 7; i++) cells.push('<span class="text-cream/50 text-xs py-1">' + HE_DAYS[i] + '</span>');
+        d = new Date(start);
+        for (i = 0; i < 42; i++) {
+          key = dateKey(d);
+          hours = getHoursForDate(d);
+          past = isPastDate(d);
+          disabled = past || !hours;
+          selected = state.selectedDate && dateKey(state.selectedDate) === key;
+          cells.push(
+            '<button type="button" class="calendar-day w-10 h-10 rounded-sm text-sm ' +
+            (disabled ? 'disabled ' : '') + (past ? 'past ' : '') + (selected ? 'selected ' : '') + '" ' +
+            (disabled ? 'disabled' : 'data-date="' + key + '"') + '>' + d.getDate() + '</button>'
+          );
+          d.setDate(d.getDate() + 1);
+        }
+        calEl.innerHTML = cells.join('');
+        calEl.querySelectorAll('[data-date]').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            state.selectedDate = new Date(btn.dataset.date + 'T12:00:00');
+            renderCalendar();
+            step1Next.disabled = false;
+            step1Next.className = 'mt-6 w-full py-3 rounded-sm font-semibold border border-copper text-copper hover:bg-copper hover:text-charcoal transition-colors';
+          });
+        });
+      }
+
+      function renderTimeSlots() {
+        var d = state.selectedDate;
+        if (!d) return;
+        var hours = getHoursForDate(d);
+        if (!hours) return;
+        selectedDateLabel.textContent = dateKey(d);
+        var slots = [];
+        var h, m, key, taken;
+        for (h = hours.start; h < hours.end; h++) {
+          for (m = 0; m < 60; m += 30) {
+            key = slotKey(d, h, m);
+            taken = isSlotBooked(d, h, m);
+            slots.push({ key: key, label: String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0'), taken: taken });
+          }
+        }
+        timesEl.innerHTML = slots.map(function (s) {
+          return '<button type="button" class="time-slot py-2 rounded-sm border border-cream/20 text-cream/90 text-sm ' +
+            (s.taken ? 'taken' : '') + '" ' + (s.taken ? 'disabled' : '') + ' data-slot="' + s.key + '">' + s.label + '</button>';
+        }).join('');
+        state.selectedTime = null;
+        step2Next.disabled = true;
+        step2Next.className = 'flex-1 py-3 rounded-sm font-semibold bg-cream/10 text-cream/50 border border-cream/20 cursor-not-allowed';
+        timesEl.querySelectorAll('.time-slot:not(.taken)').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            timesEl.querySelectorAll('.time-slot').forEach(function (b) { b.classList.remove('selected'); });
+            btn.classList.add('selected');
+            state.selectedTime = btn.dataset.slot;
+            step2Next.disabled = false;
+            step2Next.className = 'flex-1 py-3 rounded-sm font-semibold border border-copper text-copper hover:bg-copper hover:text-charcoal transition-colors';
+          });
+        });
+      }
+
+      document.querySelectorAll('[data-booking-open]').forEach(function (btn) {
+        btn.addEventListener('click', openModal);
+      });
+      document.querySelectorAll('[data-booking-close]').forEach(function (btn) {
+        btn.addEventListener('click', closeModal);
+      });
+      modal.querySelector('.booking-modal-backdrop').addEventListener('click', closeModal);
+      document.getElementById('booking-cal-prev').addEventListener('click', function () {
+        state.viewMonth.setMonth(state.viewMonth.getMonth() - 1);
+        renderCalendar();
+      });
+      document.getElementById('booking-cal-next').addEventListener('click', function () {
+        state.viewMonth.setMonth(state.viewMonth.getMonth() + 1);
+        renderCalendar();
+      });
+      step1Next.addEventListener('click', function () { goToStep(2); });
+      document.getElementById('booking-step2-back').addEventListener('click', function () { goToStep(1); });
+      step2Next.addEventListener('click', function () { goToStep(3); });
+      document.getElementById('booking-step3-back').addEventListener('click', function () { goToStep(2); });
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var name = document.getElementById('booking-name').value.trim();
+        var phone = document.getElementById('booking-phone').value.trim();
+        var email = document.getElementById('booking-email').value.trim();
+        var startDate = new Date(state.selectedTime);
+        var endDate = new Date(startDate.getTime() + 30 * 60 * 1000);
+        var payload = {
+          name: name,
+          phone: phone,
+          email: email,
+          start: startDate.toISOString(),
+          end: endDate.toISOString(),
+          title: 'תספורת: ' + name + ' - ' + phone
+        };
+        var submitBtn = document.getElementById('booking-submit');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'שולח...';
+        fetch('/api/book', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        })
+          .then(function (res) {
+            if (!res.ok) throw new Error('Booking failed');
+            return res.json();
+          })
+          .then(function () {
+            goToStep('success');
+          })
+          .catch(function () {
+            alert('אירעה שגיאה. נסה שוב או צור קשר בטלפון.');
+          })
+          .finally(function () {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'אישור תור';
+          });
+      });
     })();
   </script>
 </body>
