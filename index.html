@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>אושר משעל – Barber Shop | אמנות הטיפוח לגבר</title>
+  <meta name="description" content="אושר משעל – דיוק, סטייל וחוויית גילוח מסורתית בלב חולון. אולד סקול עם טוויסט מודרני." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            charcoal: '#1a1a1a',
+            cream: '#f5f5f0',
+            copper: '#b8860b',
+            'copper-light': '#c9a227',
+            'copper-dark': '#8b6914',
+          },
+          fontFamily: {
+            heebo: ['Heebo', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .text-balance { text-wrap: balance; }
+    }
+  </style>
+  <style>
+    :root {
+      --charcoal: #1a1a1a;
+      --cream: #f5f5f0;
+      --copper: #b8860b;
+      --copper-glow: rgba(184, 134, 11, 0.35);
+    }
+    body {
+      font-family: 'Heebo', sans-serif;
+      background-color: var(--charcoal);
+      color: var(--cream);
+    }
+    /* Book Now / CTA button – elegant animation */
+    .btn-book {
+      position: relative;
+      overflow: hidden;
+      transition: color 0.4s ease, box-shadow 0.4s ease, transform 0.2s ease;
+    }
+    .btn-book::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--copper) 0%, #c9a227 50%, var(--copper) 100%);
+      background-size: 200% 200%;
+      animation: shimmer 3s ease infinite;
+      z-index: -1;
+    }
+    .btn-book::after {
+      content: '';
+      position: absolute;
+      inset: 1px;
+      background: var(--charcoal);
+      z-index: -1;
+      border-radius: inherit;
+    }
+    .btn-book:hover {
+      color: var(--cream);
+      box-shadow: 0 0 24px var(--copper-glow), 0 0 48px rgba(184, 134, 11, 0.2);
+      transform: translateY(-2px);
+    }
+    .btn-book:hover::after {
+      background: transparent;
+    }
+    @keyframes shimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    /* Hero overlay */
+    .hero-overlay {
+      background: linear-gradient(to left, rgba(26,26,26,0.75) 0%, rgba(26,26,26,0.4) 50%, rgba(26,26,26,0.85) 100%);
+    }
+    /* Card hover */
+    .service-card:hover {
+      border-color: var(--copper);
+      box-shadow: 0 0 0 1px var(--copper), 0 12px 40px -12px rgba(0,0,0,0.5);
+    }
+    .gallery-item:hover {
+      transform: scale(1.02);
+      box-shadow: 0 20px 40px -12px rgba(0,0,0,0.6);
+    }
+    /* Divider line */
+    .divider-copper {
+      height: 1px;
+      background: linear-gradient(to left, transparent, var(--copper), transparent);
+      opacity: 0.6;
+    }
+    /* Nav scroll */
+    .nav-scrolled {
+      background: rgba(26, 26, 26, 0.95);
+      backdrop-filter: blur(12px);
+    }
+    /* Subtle industrial texture */
+    .bg-texture {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    }
+  </style>
+</head>
+<body class="antialiased min-h-screen bg-texture">
+  <!-- Navigation -->
+  <header id="nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 px-6 md:px-12">
+    <nav class="max-w-6xl mx-auto flex items-center justify-between">
+      <a href="#book" class="btn-book px-6 py-2.5 rounded-sm font-semibold text-sm tracking-wide text-cream border border-copper/50 hidden md:inline-block">
+        הזמן תור
+      </a>
+      <ul class="hidden md:flex items-center gap-6 md:gap-12">
+        <li><a href="#hours" class="text-cream/85 hover:text-copper transition-colors text-sm font-medium">שעות פעילות</a></li>
+        <li><a href="#gallery" class="text-cream/85 hover:text-copper transition-colors text-sm font-medium">גלריה</a></li>
+        <li><a href="#services" class="text-cream/85 hover:text-copper transition-colors text-sm font-medium">שירותים</a></li>
+      </ul>
+      <div class="text-cream font-bold text-lg tracking-tight">אושר משעל</div>
+      <button type="button" id="menu-toggle" class="md:hidden p-2 text-cream/85 hover:text-copper transition-colors" aria-label="תפריט">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="hidden md:hidden mt-4 py-4 border-t border-cream/10">
+      <a href="#book" class="btn-book block text-center w-full py-3 rounded-sm font-semibold text-cream mb-4">הזמן תור</a>
+      <ul class="space-y-3 text-center">
+        <li><a href="#services" class="block text-cream/85 hover:text-copper">שירותים</a></li>
+        <li><a href="#gallery" class="block text-cream/85 hover:text-copper">גלריה</a></li>
+        <li><a href="#hours" class="block text-cream/85 hover:text-copper">שעות פעילות</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?ixlib=rb-4.0.3&auto=format&fit=crop&w=2074&q=80');"></div>
+    <div class="hero-overlay absolute inset-0"></div>
+    <div class="relative z-10 text-center px-6 max-w-3xl mx-auto">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-cream leading-tight mb-6">
+        אושר משעל – אמנות הטיפוח לגבר
+      </h1>
+      <p class="text-cream/90 text-lg md:text-xl font-light mb-10 max-w-2xl mx-auto">
+        דיוק, סטייל וחוויית גילוח מסורתית בלב חולון
+      </p>
+      <a href="#book" class="btn-book inline-block px-10 py-4 rounded-sm font-bold text-cream text-lg tracking-wide">
+        הזמן תור
+      </a>
+    </div>
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 w-8 h-12 border border-cream/40 rounded-full flex items-start justify-center p-2 animate-bounce">
+      <span class="w-1 h-2 bg-cream/60 rounded-full"></span>
+    </div>
+  </section>
+
+  <!-- Services - The Menu -->
+  <section id="services" class="py-24 px-6 md:px-12 bg-charcoal">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold text-cream text-center mb-4">התפריט</h2>
+      <p class="text-cream/70 text-center mb-16 font-light">שירותים במסורת הברברים הקלאסית</p>
+      <div class="space-y-0">
+        <!-- Service 1 -->
+        <div class="service-card border border-cream/10 rounded-sm p-6 md:p-8 transition-all duration-300 hover:bg-cream/5">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <h3 class="text-xl font-bold text-cream mb-2">תספורת גברית</h3>
+              <p class="text-cream/75 font-light text-sm md:text-base">תספורת מקצועית בהתאמה אישית – קלאסית או מודרנית, עם ייעוץ סטייל.</p>
+            </div>
+            <span class="text-copper font-bold text-xl whitespace-nowrap">₪80</span>
+          </div>
+          <div class="divider-copper mt-6"></div>
+        </div>
+        <!-- Service 2 -->
+        <div class="service-card border border-cream/10 rounded-sm p-6 md:p-8 transition-all duration-300 hover:bg-cream/5">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <h3 class="text-xl font-bold text-cream mb-2">עיצוב זקן</h3>
+              <p class="text-cream/75 font-light text-sm md:text-base">גילוח וטיפוח זקן עם תער ומכונה – קווים חדים ומראה מטופח.</p>
+            </div>
+            <span class="text-copper font-bold text-xl whitespace-nowrap">₪50</span>
+          </div>
+          <div class="divider-copper mt-6"></div>
+        </div>
+        <!-- Service 3 -->
+        <div class="service-card border border-cream/10 rounded-sm p-6 md:p-8 transition-all duration-300 hover:bg-cream/5">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <h3 class="text-xl font-bold text-cream mb-2">גילוח מסורתי</h3>
+              <p class="text-cream/75 font-light text-sm md:text-base">חוויית גילוח אולד סקול עם תער חם, קרם ומגבת חמה – רגע של פינוק.</p>
+            </div>
+            <span class="text-copper font-bold text-xl whitespace-nowrap">₪120</span>
+          </div>
+          <div class="divider-copper mt-6"></div>
+        </div>
+        <!-- Service 4 -->
+        <div class="service-card border border-cream/10 rounded-sm p-6 md:p-8 transition-all duration-300 hover:bg-cream/5">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <h3 class="text-xl font-bold text-cream mb-2">חבילת טיפוח מלאה</h3>
+              <p class="text-cream/75 font-light text-sm md:text-base">תספורת, עיצוב זקן וגילוח מסורתי – החבילה המלאה לג'נטלמן.</p>
+            </div>
+            <span class="text-copper font-bold text-xl whitespace-nowrap">₪220</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section id="gallery" class="py-24 px-6 md:px-12 bg-[#141414]">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold text-cream text-center mb-4">גלריה</h2>
+      <p class="text-cream/70 text-center mb-16 font-light">אווירה, סגנון ומסורת</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="gallery-item rounded-sm overflow-hidden aspect-[4/5] transition-all duration-300">
+          <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=600&q=80" alt="Barbershop" class="w-full h-full object-cover" loading="lazy" />
+        </div>
+        <div class="gallery-item rounded-sm overflow-hidden aspect-square transition-all duration-300">
+          <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=600&q=80" alt="Traditional shave" class="w-full h-full object-cover" loading="lazy" />
+        </div>
+        <div class="gallery-item rounded-sm overflow-hidden aspect-[4/5] transition-all duration-300">
+          <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=600&q=80" alt="Barber chair" class="w-full h-full object-cover" loading="lazy" />
+        </div>
+        <div class="gallery-item rounded-sm overflow-hidden aspect-square transition-all duration-300">
+          <img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=600&q=80" alt="Haircut" class="w-full h-full object-cover" loading="lazy" />
+        </div>
+        <div class="gallery-item rounded-sm overflow-hidden aspect-[5/4] transition-all duration-300 sm:col-span-2">
+          <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=800&q=80" alt="Barbershop interior" class="w-full h-full object-cover" loading="lazy" />
+        </div>
+        <div class="gallery-item rounded-sm overflow-hidden aspect-[4/5] transition-all duration-300">
+          <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=600&q=80" alt="Beard trim" class="w-full h-full object-cover" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Location & Hours -->
+  <section id="location" class="py-24 px-6 md:px-12 bg-charcoal">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 lg:gap-16">
+      <div>
+        <h2 class="text-3xl md:text-4xl font-bold text-cream mb-4">מיקום</h2>
+        <p class="text-cream/90 text-lg mb-2 font-medium">הרוקמים 26, חולון</p>
+        <p class="text-cream/70 mb-6">מרכז עזריאלי</p>
+        <p class="text-cream/60 text-sm font-light mb-8">אולד סקול עם טוויסט מודרני</p>
+        <div class="aspect-video bg-cream/10 rounded-sm overflow-hidden border border-cream/10">
+          <iframe
+            src="https://maps.google.com/maps?q=Harokmim+26+Holon+Israel&t=&z=15&ie=UTF8&iwloc=&output=embed"
+            width="100%"
+            height="100%"
+            style="border:0;filter:grayscale(100%) contrast(1.1);"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="מפת גוגל – הרוקמים 26 חולון"
+          ></iframe>
+        </div>
+      </div>
+      <div id="hours">
+        <h2 class="text-3xl md:text-4xl font-bold text-cream mb-4">שעות פעילות</h2>
+        <div class="space-y-4">
+          <div class="flex justify-between items-center py-3 border-b border-cream/10">
+            <span class="text-cream/80">ראשון – חמישי</span>
+            <span class="text-copper font-medium">10:00 – 20:00</span>
+          </div>
+          <div class="flex justify-between items-center py-3 border-b border-cream/10">
+            <span class="text-cream/80">שישי</span>
+            <span class="text-copper font-medium">09:00 – 15:00</span>
+          </div>
+          <div class="flex justify-between items-center py-3 border-b border-cream/10">
+            <span class="text-cream/80">שבת</span>
+            <span class="text-cream/50">סגור</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Book CTA -->
+  <section id="book" class="py-24 px-6 md:px-12 bg-[#141414] border-t border-cream/10">
+    <div class="max-w-2xl mx-auto text-center">
+      <h2 class="text-3xl md:text-4xl font-bold text-cream mb-4">הזמן תור עכשיו</h2>
+      <p class="text-cream/70 mb-10 font-light">צרו קשר להזמנת מועד או לשאלות</p>
+      <a href="tel:0500000000" class="btn-book inline-block px-10 py-4 rounded-sm font-bold text-cream text-lg tracking-wide mb-4">
+        הזמן תור
+      </a>
+      <p class="text-cream/50 text-sm">או התקשרו: <a href="tel:0500000000" class="text-copper hover:underline">050-000-0000</a></p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 px-6 md:px-12 border-t border-cream/10">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="text-cream/60 text-sm text-center md:text-right">
+        <p class="font-semibold text-cream/90 mb-1">אושר משעל – Barber Shop</p>
+        <p>הרוקמים 26, חולון (מרכז עזריאלי)</p>
+      </div>
+      <div class="flex items-center gap-6">
+        <a href="#" class="text-cream/60 hover:text-copper transition-colors" aria-label="Facebook">Facebook</a>
+        <a href="#" class="text-cream/60 hover:text-copper transition-colors" aria-label="Instagram">Instagram</a>
+        <a href="tel:0500000000" class="text-cream/60 hover:text-copper transition-colors">050-000-0000</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var header = document.getElementById('nav');
+      function onScroll() {
+        if (window.scrollY > 60) header.classList.add('nav-scrolled');
+        else header.classList.remove('nav-scrolled');
+      }
+      window.addEventListener('scroll', onScroll);
+      onScroll();
+
+      var menuToggle = document.getElementById('menu-toggle');
+      var mobileMenu = document.getElementById('mobile-menu');
+      if (menuToggle && mobileMenu) {
+        menuToggle.addEventListener('click', function () {
+          mobileMenu.classList.toggle('hidden');
+        });
+        mobileMenu.querySelectorAll('a').forEach(function (a) {
+          a.addEventListener('click', function () { mobileMenu.classList.add('hidden'); });
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
