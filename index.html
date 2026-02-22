@@ -138,6 +138,11 @@
     .time-slot:not(.taken):hover { border-color: var(--copper); background: rgba(184,134,11,0.15); }
     .time-slot.selected { border-color: var(--copper); background: rgba(184,134,11,0.25); color: var(--cream); }
     .time-slot.taken { opacity: 0.45; cursor: not-allowed; }
+    .service-option {
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .service-option:hover { border-color: rgba(184,134,11,0.5); background: rgba(245,245,240,0.05); }
+    .service-option.selected { border-color: var(--copper); background: rgba(184,134,11,0.15); }
   </style>
 </head>
 <body class="antialiased min-h-screen bg-texture">
@@ -293,12 +298,28 @@
         <h2 class="text-3xl md:text-4xl font-bold text-cream mb-4">שעות פעילות</h2>
         <div class="space-y-4">
           <div class="flex justify-between items-center py-3 border-b border-cream/10">
-            <span class="text-cream/80">ראשון – חמישי</span>
-            <span class="text-copper font-medium">10:00 – 20:00</span>
+            <span class="text-cream/80">יום א'</span>
+            <span class="text-copper font-medium">12:00 – 19:00</span>
           </div>
           <div class="flex justify-between items-center py-3 border-b border-cream/10">
-            <span class="text-cream/80">שישי</span>
-            <span class="text-copper font-medium">09:00 – 15:00</span>
+            <span class="text-cream/80">יום ב'</span>
+            <span class="text-copper font-medium">12:00 – 19:00</span>
+          </div>
+          <div class="flex justify-between items-center py-3 border-b border-cream/10">
+            <span class="text-cream/80">יום ג'</span>
+            <span class="text-cream/50">סגור</span>
+          </div>
+          <div class="flex justify-between items-center py-3 border-b border-cream/10">
+            <span class="text-cream/80">יום ד'</span>
+            <span class="text-copper font-medium">12:00 – 19:00</span>
+          </div>
+          <div class="flex justify-between items-center py-3 border-b border-cream/10">
+            <span class="text-cream/80">יום ה'</span>
+            <span class="text-copper font-medium">12:00 – 19:00</span>
+          </div>
+          <div class="flex justify-between items-center py-3 border-b border-cream/10">
+            <span class="text-cream/80">יום ו'</span>
+            <span class="text-copper font-medium">12:00 – 15:00</span>
           </div>
           <div class="flex justify-between items-center py-3 border-b border-cream/10">
             <span class="text-cream/80">שבת</span>
@@ -332,8 +353,15 @@
         <div class="p-6 pt-12">
           <h2 id="booking-title" class="text-2xl font-bold text-cream mb-6 text-center">הזמנת תור</h2>
 
-          <!-- Step 1: Calendar -->
-          <div id="booking-step-1" class="booking-step is-active">
+          <!-- Step 1: Service selection -->
+          <div id="booking-step-0" class="booking-step is-active">
+            <p class="text-cream/70 text-sm mb-4">בחר שירות</p>
+            <div id="booking-services" class="space-y-2 mb-6"></div>
+            <button type="button" id="booking-step0-next" disabled class="w-full py-3 rounded-sm font-semibold bg-cream/10 text-cream/50 border border-cream/20 cursor-not-allowed">המשך לבחירת תאריך</button>
+          </div>
+
+          <!-- Step 2: Calendar -->
+          <div id="booking-step-1" class="booking-step">
             <p class="text-cream/70 text-sm mb-4">בחר תאריך</p>
             <div class="flex justify-between items-center mb-4">
               <button type="button" id="booking-cal-prev" class="p-2 text-cream/80 hover:text-copper transition-colors rounded" aria-label="חודש קודם">
@@ -345,21 +373,24 @@
               </button>
             </div>
             <div id="booking-calendar" class="grid grid-cols-7 gap-1 text-center text-sm"></div>
-            <button type="button" id="booking-step1-next" disabled class="mt-6 w-full py-3 rounded-sm font-semibold bg-cream/10 text-cream/50 border border-cream/20 cursor-not-allowed">המשך לבחירת שעה</button>
+            <div class="flex gap-3 mt-6">
+              <button type="button" id="booking-step1-back" class="flex-1 py-3 rounded-sm font-semibold border border-cream/30 text-cream hover:bg-cream/10 transition-colors">חזור</button>
+              <button type="button" id="booking-step1-next" disabled class="flex-1 py-3 rounded-sm font-semibold bg-cream/10 text-cream/50 border border-cream/20 cursor-not-allowed">המשך לבחירת שעה</button>
+            </div>
           </div>
 
-          <!-- Step 2: Time slots -->
+          <!-- Step 3: Time slots -->
           <div id="booking-step-2" class="booking-step">
             <p class="text-cream/70 text-sm mb-2">תאריך: <span id="booking-selected-date-label" class="text-cream font-medium"></span></p>
             <p class="text-cream/70 text-sm mb-4">בחר שעה</p>
             <div id="booking-times" class="grid grid-cols-3 sm:grid-cols-4 gap-2"></div>
             <div class="flex gap-3 mt-6">
-              <button type="button" id="booking-step2-back" class="flex-1 py-3 rounded-sm font-semibold border border-cream/30 text-cream hover:bg-cream/10 transition-colors">חזרה</button>
+              <button type="button" id="booking-step2-back" class="flex-1 py-3 rounded-sm font-semibold border border-cream/30 text-cream hover:bg-cream/10 transition-colors">חזור</button>
               <button type="button" id="booking-step2-next" disabled class="flex-1 py-3 rounded-sm font-semibold bg-cream/10 text-cream/50 border border-cream/20 cursor-not-allowed">המשך לפרטים</button>
             </div>
           </div>
 
-          <!-- Step 3: Form -->
+          <!-- Step 4: Form -->
           <div id="booking-step-3" class="booking-step">
             <p class="text-cream/70 text-sm mb-4">תור: <span id="booking-summary-datetime" class="text-cream font-medium"></span></p>
             <form id="booking-form" class="space-y-4">
@@ -377,7 +408,7 @@
               </div>
             </form>
             <div class="flex gap-3 mt-6">
-              <button type="button" id="booking-step3-back" class="flex-1 py-3 rounded-sm font-semibold border border-cream/30 text-cream hover:bg-cream/10 transition-colors">חזרה</button>
+              <button type="button" id="booking-step3-back" class="flex-1 py-3 rounded-sm font-semibold border border-cream/30 text-cream hover:bg-cream/10 transition-colors">חזור</button>
               <button type="submit" id="booking-submit" form="booking-form" class="btn-book flex-1 py-3 rounded-sm font-bold text-cream border border-copper/50">
                 אישור תור
               </button>
@@ -436,21 +467,29 @@
     (function () {
       var HE_DAYS = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ש'];
       var HE_MONTHS = ['ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני', 'יולי', 'אוגוסט', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'];
+      var STEP_TITLES = ['שלב 1: בחירת שירות', 'שלב 2: בחירת תאריך', 'שלב 3: בחירת שעה', 'שלב 4: פרטי לקוח'];
+      var SERVICES = [
+        { id: 'haircut', nameHe: 'תספורת גברית', price: 80, durationMinutes: 30 },
+        { id: 'beard', nameHe: 'עיצוב זקן', price: 50, durationMinutes: 20 },
+        { id: 'shave', nameHe: 'גילוח מסורתי', price: 120, durationMinutes: 30 },
+        { id: 'full', nameHe: 'חבילת טיפוח מלאה', price: 220, durationMinutes: 80 }
+      ];
       var MOCK_BOOKED = [
-        '2026-02-23T10:00', '2026-02-23T10:30', '2026-02-23T14:00',
-        '2026-02-24T11:00', '2026-02-24T16:00',
-        '2026-02-25T09:30', '2026-02-25T15:00'
+        '2026-02-23T12:00', '2026-02-23T14:30', '2026-02-23T16:00',
+        '2026-02-26T13:00', '2026-02-26T17:00',
+        '2026-02-27T12:30', '2026-02-27T15:00'
       ];
       var today = new Date();
       today.setHours(0, 0, 0, 0);
 
       function dayOfWeek(d) { return d.getDay(); }
       function isSaturday(d) { return dayOfWeek(d) === 6; }
+      function isTuesday(d) { return dayOfWeek(d) === 2; }
       function isFriday(d) { return dayOfWeek(d) === 5; }
       function getHoursForDate(d) {
-        if (isSaturday(d)) return null;
-        if (isFriday(d)) return { start: 9, end: 15 };
-        return { start: 10, end: 20 };
+        if (isSaturday(d) || isTuesday(d)) return null;
+        if (isFriday(d)) return { start: 12, end: 15 };
+        return { start: 12, end: 19 };
       }
       function isPastDate(d) {
         var t = new Date(d);
@@ -469,35 +508,48 @@
       }
 
       var modal = document.getElementById('booking-modal');
+      var titleEl = document.getElementById('booking-title');
+      var step0 = document.getElementById('booking-step-0');
       var step1 = document.getElementById('booking-step-1');
       var step2 = document.getElementById('booking-step-2');
       var step3 = document.getElementById('booking-step-3');
       var successEl = document.getElementById('booking-success');
+      var servicesEl = document.getElementById('booking-services');
       var calEl = document.getElementById('booking-calendar');
       var monthYearEl = document.getElementById('booking-month-year');
       var timesEl = document.getElementById('booking-times');
       var selectedDateLabel = document.getElementById('booking-selected-date-label');
       var summaryDatetime = document.getElementById('booking-summary-datetime');
+      var step0Next = document.getElementById('booking-step0-next');
       var step1Next = document.getElementById('booking-step1-next');
       var step2Next = document.getElementById('booking-step2-next');
       var form = document.getElementById('booking-form');
 
-      var state = { viewMonth: new Date(), selectedDate: null, selectedTime: null };
+      var state = { selectedService: null, viewMonth: new Date(), selectedDate: null, selectedTime: null };
 
+      function setStepTitle(stepIndex) {
+        if (typeof stepIndex === 'number' && stepIndex >= 0 && stepIndex < STEP_TITLES.length) {
+          titleEl.textContent = STEP_TITLES[stepIndex];
+        }
+      }
       function openModal() {
+        state.selectedService = null;
         state.viewMonth = new Date();
         state.selectedDate = null;
         state.selectedTime = null;
         if (state.viewMonth.getMonth() === today.getMonth() && state.viewMonth.getFullYear() === today.getFullYear()) {
           state.viewMonth.setDate(today.getDate());
         }
-        step1.classList.add('is-active');
+        step0.classList.add('is-active');
+        step1.classList.remove('is-active');
         step2.classList.remove('is-active');
         step3.classList.remove('is-active');
         successEl.classList.remove('is-active');
-        step1Next.disabled = true;
-        step1Next.className = 'mt-6 w-full py-3 rounded-sm font-semibold bg-cream/10 text-cream/50 border border-cream/20 cursor-not-allowed';
+        setStepTitle(0);
+        renderServices();
         renderCalendar();
+        step0Next.disabled = true;
+        step0Next.className = 'w-full py-3 rounded-sm font-semibold bg-cream/10 text-cream/50 border border-cream/20 cursor-not-allowed';
         modal.classList.remove('hidden');
         modal.setAttribute('aria-hidden', 'false');
       }
@@ -506,18 +558,50 @@
         modal.setAttribute('aria-hidden', 'true');
       }
       function goToStep(n) {
+        step0.classList.remove('is-active');
         step1.classList.remove('is-active');
         step2.classList.remove('is-active');
         step3.classList.remove('is-active');
         successEl.classList.remove('is-active');
-        if (n === 1) step1.classList.add('is-active');
-        if (n === 2) { step2.classList.add('is-active'); renderTimeSlots(); }
+        if (n === 0) { step0.classList.add('is-active'); setStepTitle(0); }
+        if (n === 1) {
+          step1.classList.add('is-active');
+          setStepTitle(1);
+          if (state.selectedDate) {
+            step1Next.disabled = false;
+            step1Next.className = 'flex-1 py-3 rounded-sm font-semibold border border-copper text-copper hover:bg-copper hover:text-charcoal transition-colors';
+          } else {
+            step1Next.disabled = true;
+            step1Next.className = 'flex-1 py-3 rounded-sm font-semibold bg-cream/10 text-cream/50 border border-cream/20 cursor-not-allowed';
+          }
+        }
+        if (n === 2) { step2.classList.add('is-active'); setStepTitle(2); renderTimeSlots(); }
         if (n === 3) {
           step3.classList.add('is-active');
+          setStepTitle(3);
           var d = state.selectedDate;
-          summaryDatetime.textContent = dateKey(d) + ' ' + (state.selectedTime ? state.selectedTime.slice(11, 16) : '');
+          var serviceLabel = state.selectedService ? state.selectedService.nameHe + ' – ' : '';
+          summaryDatetime.textContent = serviceLabel + dateKey(d) + ' ' + (state.selectedTime ? state.selectedTime.slice(11, 16) : '');
         }
-        if (n === 'success') successEl.classList.add('is-active');
+        if (n === 'success') { successEl.classList.add('is-active'); titleEl.textContent = 'הזמנת תור'; }
+      }
+      function renderServices() {
+        servicesEl.innerHTML = SERVICES.map(function (s) {
+          return '<button type="button" class="service-option w-full text-right py-3 px-4 rounded-sm border border-cream/20 text-cream flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1" data-service-id="' + s.id + '">' +
+            '<span class="font-medium">' + s.nameHe + '</span>' +
+            '<span class="text-copper font-bold">₪' + s.price + ' · ' + s.durationMinutes + ' דק׳</span>' +
+            '</button>';
+        }).join('');
+        servicesEl.querySelectorAll('.service-option').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var id = btn.dataset.serviceId;
+            state.selectedService = SERVICES.filter(function (s) { return s.id === id; })[0];
+            servicesEl.querySelectorAll('.service-option').forEach(function (b) { b.classList.remove('selected'); });
+            btn.classList.add('selected');
+            step0Next.disabled = false;
+            step0Next.className = 'w-full py-3 rounded-sm font-semibold border border-copper text-copper hover:bg-copper hover:text-charcoal transition-colors';
+          });
+        });
       }
 
       function renderCalendar() {
@@ -552,7 +636,7 @@
             state.selectedDate = new Date(btn.dataset.date + 'T12:00:00');
             renderCalendar();
             step1Next.disabled = false;
-            step1Next.className = 'mt-6 w-full py-3 rounded-sm font-semibold border border-copper text-copper hover:bg-copper hover:text-charcoal transition-colors';
+            step1Next.className = 'flex-1 py-3 rounded-sm font-semibold border border-copper text-copper hover:bg-copper hover:text-charcoal transition-colors';
           });
         });
       }
@@ -605,6 +689,8 @@
         state.viewMonth.setMonth(state.viewMonth.getMonth() + 1);
         renderCalendar();
       });
+      step0Next.addEventListener('click', function () { goToStep(1); });
+      document.getElementById('booking-step1-back').addEventListener('click', function () { goToStep(0); });
       step1Next.addEventListener('click', function () { goToStep(2); });
       document.getElementById('booking-step2-back').addEventListener('click', function () { goToStep(1); });
       step2Next.addEventListener('click', function () { goToStep(3); });
@@ -616,14 +702,16 @@
         var phone = document.getElementById('booking-phone').value.trim();
         var email = document.getElementById('booking-email').value.trim();
         var startDate = new Date(state.selectedTime);
-        var endDate = new Date(startDate.getTime() + 30 * 60 * 1000);
+        var durationMs = (state.selectedService && state.selectedService.durationMinutes) ? state.selectedService.durationMinutes * 60 * 1000 : 30 * 60 * 1000;
+        var endDate = new Date(startDate.getTime() + durationMs);
+        var serviceName = state.selectedService ? state.selectedService.nameHe : 'תספורת';
         var payload = {
           name: name,
           phone: phone,
           email: email,
           start: startDate.toISOString(),
           end: endDate.toISOString(),
-          title: 'תספורת: ' + name + ' - ' + phone
+          title: serviceName + ': ' + name + ' - ' + phone
         };
         var submitBtn = document.getElementById('booking-submit');
         submitBtn.disabled = true;
