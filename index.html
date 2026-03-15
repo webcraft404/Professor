@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>אושר משעל – Barber Shop | אמנות הטיפוח לגבר</title>
-  <meta name="description" content="אושר משעל – דיוק, סטייל וחוויית גילוח מסורתית בלב חולון. אולד סקול עם טוויסט מודרני." />
+  <title>הברבריה של הפרופסור – Barbery | דיוק אקדמי ופרמיום גרומינג</title>
+  <meta name="description" content="חוויית גרומינג מחושבת לגבר. דיוק אקדמי, סטייל מסורתי ופרמיום גרומינג בלב חולון. סדנת הפרופסור לדיוק." />
+  <link rel="icon" type="image/x-icon" href="Logo.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -14,11 +15,12 @@
       theme: {
         extend: {
           colors: {
-            charcoal: '#1a1a1a',
-            cream: '#f5f5f0',
+            'deep-midnight': '#101420',
+            'cream-bg': '#fcfbf4',
             copper: '#b8860b',
             'copper-light': '#c9a227',
             'copper-dark': '#8b6914',
+            'cream-text': '#f1efd9',
           },
           fontFamily: {
             heebo: ['Heebo', 'sans-serif'],
@@ -34,17 +36,17 @@
   </style>
   <style>
     :root {
-      --charcoal: #1a1a1a;
-      --cream: #f5f5f0;
+      --deep-midnight: #101420;
+      --cream-bg: #fcfbf4;
       --copper: #b8860b;
       --copper-glow: rgba(184, 134, 11, 0.35);
+      --cream-text: #f1efd9;
     }
     body {
       font-family: 'Heebo', sans-serif;
-      background-color: var(--charcoal);
-      color: var(--cream);
+      background-color: var(--deep-midnight);
+      color: var(--cream-text);
     }
-    /* Book Now / CTA button – elegant animation */
     .btn-book {
       position: relative;
       overflow: hidden;
@@ -57,36 +59,34 @@
       right: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, var(--copper) 0%, #c9a227 50%, var(--copper) 100%);
+      background: linear-gradient(135deg, var(--copper) 0%, #a17b00 50%, var(--copper) 100%);
       background-size: 200% 200%;
-      animation: shimmer 3s ease infinite;
+      animation: antiqueShimmer 4s ease infinite;
       z-index: -1;
     }
     .btn-book::after {
       content: '';
       position: absolute;
       inset: 1px;
-      background: var(--charcoal);
+      background: var(--deep-midnight);
       z-index: -1;
       border-radius: inherit;
     }
     .btn-book:hover {
-      color: var(--cream);
+      color: var(--cream-text);
       box-shadow: 0 0 24px var(--copper-glow), 0 0 48px rgba(184, 134, 11, 0.2);
       transform: translateY(-2px);
     }
     .btn-book:hover::after {
       background: transparent;
     }
-    @keyframes shimmer {
+    @keyframes antiqueShimmer {
       0%, 100% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
     }
-    /* Hero overlay */
     .hero-overlay {
-      background: linear-gradient(to left, rgba(26,26,26,0.75) 0%, rgba(26,26,26,0.4) 50%, rgba(26,26,26,0.85) 100%);
+      background: linear-gradient(to left, rgba(16,20,32,0.85) 0%, rgba(16,20,32,0.5) 50%, rgba(16,20,32,0.9) 100%);
     }
-    /* Card hover */
     .service-card:hover {
       border-color: var(--copper);
       box-shadow: 0 0 0 1px var(--copper), 0 12px 40px -12px rgba(0,0,0,0.5);
@@ -95,22 +95,18 @@
       transform: scale(1.02);
       box-shadow: 0 20px 40px -12px rgba(0,0,0,0.6);
     }
-    /* Divider line */
     .divider-copper {
       height: 1px;
       background: linear-gradient(to left, transparent, var(--copper), transparent);
       opacity: 0.6;
     }
-    /* Nav scroll */
     .nav-scrolled {
-      background: rgba(26, 26, 26, 0.95);
+      background: rgba(16, 20, 32, 0.95);
       backdrop-filter: blur(12px);
     }
-    /* Subtle industrial texture */
     .bg-texture {
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
     }
-    /* Booking modal */
     .booking-modal-backdrop {
       background: rgba(0, 0, 0, 0.75);
       backdrop-filter: blur(6px);
@@ -128,115 +124,104 @@
       from { opacity: 0; transform: translateX(12px); }
       to { opacity: 1; transform: translateX(0); }
     }
-    .calendar-day {
-      transition: background 0.2s, color 0.2s;
-    }
-    .calendar-day:not(.disabled):not(.past):hover { background: rgba(245,245,240,0.1); }
-    .calendar-day.selected { background: var(--copper); color: var(--charcoal); }
+    .calendar-day { transition: background 0.2s, color 0.2s; }
+    .calendar-day:not(.disabled):not(.past):hover { background: rgba(241,239,217,0.1); }
+    .calendar-day.selected { background: var(--copper); color: var(--deep-midnight); }
     .calendar-day.disabled, .calendar-day.past { opacity: 0.4; cursor: not-allowed; }
     .time-slot { transition: background 0.2s, border-color 0.2s; }
     .time-slot:not(.taken):hover { border-color: var(--copper); background: rgba(184,134,11,0.15); }
-    .time-slot.selected { border-color: var(--copper); background: rgba(184,134,11,0.25); color: var(--cream); }
+    .time-slot.selected { border-color: var(--copper); background: rgba(184,134,11,0.25); color: var(--cream-text); }
     .time-slot.taken { opacity: 0.45; cursor: not-allowed; }
-    .service-option {
-      transition: border-color 0.2s, background 0.2s;
-    }
-    .service-option:hover { border-color: rgba(184,134,11,0.5); background: rgba(245,245,240,0.05); }
+    .service-option { transition: border-color 0.2s, background 0.2s; }
+    .service-option:hover { border-color: rgba(184,134,11,0.5); background: rgba(241,239,217,0.05); }
     .service-option.selected { border-color: var(--copper); background: rgba(184,134,11,0.15); }
   </style>
 </head>
 <body class="antialiased min-h-screen bg-texture">
-  <!-- Navigation -->
   <header id="nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 px-6 md:px-12">
     <nav class="max-w-6xl mx-auto flex items-center justify-between">
-      <button type="button" data-booking-open class="btn-book px-6 py-2.5 rounded-sm font-semibold text-sm tracking-wide text-cream border border-copper/50 hidden md:inline-block">
-        הזמן תור
+      <button type="button" data-booking-open class="btn-book px-6 py-2.5 rounded-sm font-semibold text-sm tracking-wide text-cream-text border border-copper/50 hidden md:inline-block">
+        קבעו פגישה
       </button>
       <ul class="hidden md:flex items-center gap-6 md:gap-12">
-        <li><a href="#hours" class="text-cream/85 hover:text-copper transition-colors text-sm font-medium">שעות פעילות</a></li>
-        <li><a href="#gallery" class="text-cream/85 hover:text-copper transition-colors text-sm font-medium">גלריה</a></li>
-        <li><a href="#services" class="text-cream/85 hover:text-copper transition-colors text-sm font-medium">שירותים</a></li>
+        <li><a href="#hours" class="text-cream-text/85 hover:text-copper transition-colors text-sm font-medium">שעות מחקר</a></li>
+        <li><a href="#gallery" class="text-cream-text/85 hover:text-copper transition-colors text-sm font-medium">סדנת המחקר</a></li>
+        <li><a href="#services" class="text-cream-text/85 hover:text-copper transition-colors text-sm font-medium">תכנית הטיפוח</a></li>
       </ul>
-      <div class="text-cream font-bold text-lg tracking-tight">אושר משעל</div>
-      <button type="button" id="menu-toggle" class="md:hidden p-2 text-cream/85 hover:text-copper transition-colors" aria-label="תפריט">
+      <div class="flex items-center gap-3">
+        <img src="Logo.jpg" alt="הברבריה של הפרופסור" class="h-12 w-12 object-cover rounded-full border border-copper/30" loading="lazy" />
+        <div class="text-cream-text font-extrabold text-xl tracking-tight hidden sm:block">הברבריה של הפרופסור</div>
+      </div>
+      <button type="button" id="menu-toggle" class="md:hidden p-2 text-cream-text/85 hover:text-copper transition-colors" aria-label="תפריט">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
       </button>
     </nav>
-    <div id="mobile-menu" class="hidden md:hidden mt-4 py-4 border-t border-cream/10">
-      <button type="button" data-booking-open class="btn-book block text-center w-full py-3 rounded-sm font-semibold text-cream mb-4">הזמן תור</button>
+    <div id="mobile-menu" class="hidden md:hidden mt-4 py-4 border-t border-cream-text/10 bg-deep-midnight/95 backdrop-blur-sm rounded-b-sm">
+      <button type="button" data-booking-open class="btn-book block text-center w-full py-3 rounded-sm font-semibold text-cream-text mb-4">קבעו פגישה</button>
       <ul class="space-y-3 text-center">
-        <li><a href="#services" class="block text-cream/85 hover:text-copper">שירותים</a></li>
-        <li><a href="#gallery" class="block text-cream/85 hover:text-copper">גלריה</a></li>
-        <li><a href="#hours" class="block text-cream/85 hover:text-copper">שעות פעילות</a></li>
+        <li><a href="#services" class="block text-cream-text/85 hover:text-copper">תכנית הטיפוח</a></li>
+        <li><a href="#gallery" class="block text-cream-text/85 hover:text-copper">סדנת המחקר</a></li>
+        <li><a href="#hours" class="block text-cream-text/85 hover:text-copper">שעות מחקר</a></li>
       </ul>
     </div>
   </header>
 
-  <!-- Hero -->
   <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
-    <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?ixlib=rb-4.0.3&auto=format&fit=crop&w=2074&q=80');"></div>
+    <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');"></div>
     <div class="hero-overlay absolute inset-0"></div>
-    <div class="relative z-10 text-center px-6 max-w-3xl mx-auto">
-      <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-cream leading-tight mb-6">
-        אושר משעל – אמנות הטיפוח לגבר
+    <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
+      <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold text-cream-text leading-tight mb-8">
+        הברבריה של הפרופסור
       </h1>
-      <p class="text-cream/90 text-lg md:text-xl font-light mb-10 max-w-2xl mx-auto">
-        דיוק, סטייל וחוויית גילוח מסורתית בלב חולון
+      <p class="text-cream-text/90 text-lg md:text-xl font-light mb-12 max-w-2xl mx-auto text-balance">
+        חוויית גרומינג מחושבת. דיוק אקדמי, סטייל מסורתי ופרמיום גרומינג בלב חולון. סדנת הפרופסור לדיוק.
       </p>
-      <button type="button" data-booking-open class="btn-book inline-block px-10 py-4 rounded-sm font-bold text-cream text-lg tracking-wide">
-        הזמן תור
+      <button type="button" data-booking-open class="btn-book inline-block px-12 py-5 rounded-sm font-bold text-cream-text text-xl tracking-wide">
+        קבעו פגישה מחושבת
       </button>
-    </div>
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 w-8 h-12 border border-cream/40 rounded-full flex items-start justify-center p-2 animate-bounce">
-      <span class="w-1 h-2 bg-cream/60 rounded-full"></span>
     </div>
   </section>
 
-  <!-- Services - The Menu -->
-  <section id="services" class="py-24 px-6 md:px-12 bg-charcoal">
+  <section id="services" class="py-24 px-6 md:px-12 bg-deep-midnight">
     <div class="max-w-5xl mx-auto">
-      <h2 class="text-3xl md:text-4xl font-bold text-cream text-center mb-4">התפריט</h2>
-      <p class="text-cream/70 text-center mb-16 font-light">שירותים במסורת הברברים הקלאסית</p>
+      <h2 class="text-3xl md:text-4xl font-bold text-cream-text text-center mb-4">תכנית הטיפוח המחושבת</h2>
+      <p class="text-cream-text/70 text-center mb-16 font-light">מסורת, מחקר ואיכות בלתי מתפשרת</p>
       <div class="space-y-0">
-        <!-- Service 1 -->
-        <div class="service-card border border-cream/10 rounded-sm p-6 md:p-8 transition-all duration-300 hover:bg-cream/5">
+        <div class="service-card border border-cream-text/10 rounded-sm p-6 md:p-8 transition-all duration-300 hover:bg-cream-text/5">
           <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-              <h3 class="text-xl font-bold text-cream mb-2">תספורת גברית</h3>
-              <p class="text-cream/75 font-light text-sm md:text-base">תספורת מקצועית בהתאמה אישית – קלאסית או מודרנית, עם ייעוץ סטייל.</p>
+              <h3 class="text-xl font-bold text-cream-text mb-2">התספורת המחושבת</h3>
+              <p class="text-cream-text/75 font-light text-sm md:text-base">תספורת מקצועית בהתאמה אישית – שילוב של קלאסיקה עם מגע מחקרי מחושב.</p>
             </div>
             <button type="button" data-booking-open class="text-copper font-bold text-xl whitespace-nowrap hover:underline focus:outline-none">₪80</button>
           </div>
           <div class="divider-copper mt-6"></div>
         </div>
-        <!-- Service 2 -->
-        <div class="service-card border border-cream/10 rounded-sm p-6 md:p-8 transition-all duration-300 hover:bg-cream/5">
+        <div class="service-card border border-cream-text/10 rounded-sm p-6 md:p-8 transition-all duration-300 hover:bg-cream-text/5">
           <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-              <h3 class="text-xl font-bold text-cream mb-2">עיצוב זקן</h3>
-              <p class="text-cream/75 font-light text-sm md:text-base">גילוח וטיפוח זקן עם תער ומכונה – קווים חדים ומראה מטופח.</p>
+              <h3 class="text-xl font-bold text-cream-text mb-2">עיצוב זקן מתמטי</h3>
+              <p class="text-cream-text/75 font-light text-sm md:text-base">טיפוח זקן מדויק ומחושב – קווים חדים המשתלבים בצורת הפנים באופן אופטימלי.</p>
             </div>
             <button type="button" data-booking-open class="text-copper font-bold text-xl whitespace-nowrap hover:underline focus:outline-none">₪50</button>
           </div>
           <div class="divider-copper mt-6"></div>
         </div>
-        <!-- Service 3 -->
-        <div class="service-card border border-cream/10 rounded-sm p-6 md:p-8 transition-all duration-300 hover:bg-cream/5">
+        <div class="service-card border border-cream-text/10 rounded-sm p-6 md:p-8 transition-all duration-300 hover:bg-cream-text/5">
           <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-              <h3 class="text-xl font-bold text-cream mb-2">גילוח מסורתי</h3>
-              <p class="text-cream/75 font-light text-sm md:text-base">חוויית גילוח אולד סקול עם תער חם, קרם ומגבת חמה – רגע של פינוק.</p>
+              <h3 class="text-xl font-bold text-cream-text mb-2">גילוח מסורתי בשיטת הפרופסור</h3>
+              <p class="text-cream-text/75 font-light text-sm md:text-base">גילוח אולד סקול חם ומחושב עם תער, קרם ומגבת חמה – חוויה המשלבת מדע וטיפוח.</p>
             </div>
             <button type="button" data-booking-open class="text-copper font-bold text-xl whitespace-nowrap hover:underline focus:outline-none">₪120</button>
           </div>
           <div class="divider-copper mt-6"></div>
         </div>
-        <!-- Service 4 -->
-        <div class="service-card border border-cream/10 rounded-sm p-6 md:p-8 transition-all duration-300 hover:bg-cream/5">
+        <div class="service-card border border-cream-text/10 rounded-sm p-6 md:p-8 transition-all duration-300 hover:bg-cream-text/5">
           <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-              <h3 class="text-xl font-bold text-cream mb-2">חבילת טיפוח מלאה</h3>
-              <p class="text-cream/75 font-light text-sm md:text-base">תספורת, עיצוב זקן וגילוח מסורתי – החבילה המלאה לג'נטלמן.</p>
+              <h3 class="text-xl font-bold text-cream-text mb-2">תכנית הטיפוח המקיפה לג'נטלמן</h3>
+              <p class="text-cream-text/75 font-light text-sm md:text-base">החבילה המלאה – תספורת מחושבת, עיצוב זקן מתמטי וגילוח מסורתי בשיטת הפרופסור.</p>
             </div>
             <button type="button" data-booking-open class="text-copper font-bold text-xl whitespace-nowrap hover:underline focus:outline-none">₪220</button>
           </div>
@@ -245,14 +230,13 @@
     </div>
   </section>
 
-  <!-- Gallery -->
-  <section id="gallery" class="py-24 px-6 md:px-12 bg-[#141414]">
+  <section id="gallery" class="py-24 px-6 md:px-12 bg-[#0c0f17]">
     <div class="max-w-6xl mx-auto">
-      <h2 class="text-3xl md:text-4xl font-bold text-cream text-center mb-4">גלריה</h2>
-      <p class="text-cream/70 text-center mb-16 font-light">אווירה, סגנון ומסורת</p>
+      <h2 class="text-3xl md:text-4xl font-bold text-cream-text text-center mb-4">סדנת המחקר של הפרופסור</h2>
+      <p class="text-cream-text/70 text-center mb-16 font-light">מבט מבפנים על אווירה, סגנון ודיוק</p>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <div class="gallery-item rounded-sm overflow-hidden aspect-[4/5] transition-all duration-300">
-          <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=600&q=80" alt="Barbershop" class="w-full h-full object-cover" loading="lazy" />
+          <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=600&q=80" alt="שולחן עבודה מחושב" class="w-full h-full object-cover" loading="lazy" />
         </div>
         <div class="gallery-item rounded-sm overflow-hidden aspect-square transition-all duration-300">
           <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=600&q=80" alt="Traditional shave" class="w-full h-full object-cover" loading="lazy" />
@@ -264,7 +248,7 @@
           <img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=600&q=80" alt="Haircut" class="w-full h-full object-cover" loading="lazy" />
         </div>
         <div class="gallery-item rounded-sm overflow-hidden aspect-[5/4] transition-all duration-300 sm:col-span-2">
-          <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=800&q=80" alt="Barbershop interior" class="w-full h-full object-cover" loading="lazy" />
+          <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=800&q=80" alt="סדנת הפרופסור לדיוק" class="w-full h-full object-cover" loading="lazy" />
         </div>
         <div class="gallery-item rounded-sm overflow-hidden aspect-[4/5] transition-all duration-300">
           <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=600&q=80" alt="Beard trim" class="w-full h-full object-cover" loading="lazy" />
@@ -273,170 +257,163 @@
     </div>
   </section>
 
-  <!-- Location & Hours -->
-  <section id="location" class="py-24 px-6 md:px-12 bg-charcoal">
+  <section id="location" class="py-24 px-6 md:px-12 bg-deep-midnight">
     <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 lg:gap-16">
       <div>
-        <h2 class="text-3xl md:text-4xl font-bold text-cream mb-4">מיקום</h2>
-        <p class="text-cream/90 text-lg mb-2 font-medium">הרוקמים 26, חולון</p>
-        <p class="text-cream/70 mb-6">מרכז עזריאלי</p>
-        <p class="text-cream/60 text-sm font-light mb-8">אולד סקול עם טוויסט מודרני</p>
-        <div class="aspect-video bg-cream/10 rounded-sm overflow-hidden border border-cream/10">
+        <h2 class="text-3xl md:text-4xl font-bold text-cream-text mb-4">סדנת הפרופסור לדיוק</h2>
+        <p class="text-cream-text/90 text-lg mb-2 font-medium">הרוקמים 26, חולון – מרכז עזריאלי</p>
+        <p class="text-cream-text/60 text-sm font-light mb-8">שילוב של מדע ואמנות הטיפוח.</p>
+        <div class="aspect-video bg-cream-text/10 rounded-sm overflow-hidden border border-cream-text/10">
           <iframe
             src="https://maps.google.com/maps?q=Harokmim+26+Holon+Israel&t=&z=15&ie=UTF8&iwloc=&output=embed"
             width="100%"
             height="100%"
-            style="border:0;filter:grayscale(100%) contrast(1.1);"
+            style="border:0;filter:grayscale(100%) contrast(1.1) brightness(0.9) saturate(0.8);"
             allowfullscreen=""
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
-            title="מפת גוגל – הרוקמים 26 חולון"
+            title="מפת גוגל – הברבריה של הפרופסור"
           ></iframe>
         </div>
       </div>
       <div id="hours">
-        <h2 class="text-3xl md:text-4xl font-bold text-cream mb-4">שעות פעילות</h2>
+        <h2 class="text-3xl md:text-4xl font-bold text-cream-text mb-4">שעות מחקר וטיפוח</h2>
         <div class="space-y-4">
-          <div class="flex justify-between items-center py-3 border-b border-cream/10">
-            <span class="text-cream/80">יום א'</span>
+          <div class="flex justify-between items-center py-3 border-b border-cream-text/10">
+            <span class="text-cream-text/80">יום א'</span>
             <span class="text-copper font-medium">12:00 – 19:00</span>
           </div>
-          <div class="flex justify-between items-center py-3 border-b border-cream/10">
-            <span class="text-cream/80">יום ב'</span>
+          <div class="flex justify-between items-center py-3 border-b border-cream-text/10">
+            <span class="text-cream-text/80">יום ב'</span>
             <span class="text-copper font-medium">12:00 – 19:00</span>
           </div>
-          <div class="flex justify-between items-center py-3 border-b border-cream/10">
-            <span class="text-cream/80">יום ג'</span>
-            <span class="text-cream/50">סגור</span>
+          <div class="flex justify-between items-center py-3 border-b border-cream-text/10">
+            <span class="text-cream-text/80">יום ג'</span>
+            <span class="text-cream-text/50">סגור – זמן מחקר</span>
           </div>
-          <div class="flex justify-between items-center py-3 border-b border-cream/10">
-            <span class="text-cream/80">יום ד'</span>
+          <div class="flex justify-between items-center py-3 border-b border-cream-text/10">
+            <span class="text-cream-text/80">יום ד'</span>
             <span class="text-copper font-medium">12:00 – 19:00</span>
           </div>
-          <div class="flex justify-between items-center py-3 border-b border-cream/10">
-            <span class="text-cream/80">יום ה'</span>
+          <div class="flex justify-between items-center py-3 border-b border-cream-text/10">
+            <span class="text-cream-text/80">יום ה'</span>
             <span class="text-copper font-medium">12:00 – 19:00</span>
           </div>
-          <div class="flex justify-between items-center py-3 border-b border-cream/10">
-            <span class="text-cream/80">יום ו'</span>
+          <div class="flex justify-between items-center py-3 border-b border-cream-text/10">
+            <span class="text-cream-text/80">יום ו'</span>
             <span class="text-copper font-medium">12:00 – 15:00</span>
           </div>
-          <div class="flex justify-between items-center py-3 border-b border-cream/10">
-            <span class="text-cream/80">שבת</span>
-            <span class="text-cream/50">סגור</span>
+          <div class="flex justify-between items-center py-3 border-b border-cream-text/10">
+            <span class="text-cream-text/80">שבת</span>
+            <span class="text-cream-text/50">סגור</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Book CTA -->
-  <section id="book" class="py-24 px-6 md:px-12 bg-[#141414] border-t border-cream/10">
+  <section id="book" class="py-24 px-6 md:px-12 bg-[#0c0f17] border-t border-cream-text/10">
     <div class="max-w-2xl mx-auto text-center">
-      <h2 class="text-3xl md:text-4xl font-bold text-cream mb-4">הזמן תור עכשיו</h2>
-      <p class="text-cream/70 mb-10 font-light">צרו קשר להזמנת מועד או לשאלות</p>
-      <button type="button" data-booking-open class="btn-book inline-block px-10 py-4 rounded-sm font-bold text-cream text-lg tracking-wide mb-4">
-        הזמן תור
+      <h2 class="text-3xl md:text-4xl font-bold text-cream-text mb-4">קבעו פגישה מחושבת עם הפרופסור</h2>
+      <p class="text-cream-text/70 mb-10 font-light text-balance">בחרו את מועד המחקר והטיפוח המתאים לכם.</p>
+      <button type="button" data-booking-open class="btn-book inline-block px-12 py-5 rounded-sm font-bold text-cream-text text-xl tracking-wide mb-4">
+        קבעו פגישה מחושבת
       </button>
-      <p class="text-cream/50 text-sm">או התקשרו: <a href="tel:0500000000" class="text-copper hover:underline">050-000-0000</a></p>
+      <p class="text-cream-text/50 text-sm">או התקשרו: <a href="tel:0500000000" class="text-copper hover:underline">050-000-0000</a></p>
     </div>
   </section>
 
-  <!-- Booking Modal -->
   <div id="booking-modal" class="fixed inset-0 z-[100] hidden" aria-hidden="true">
     <div class="booking-modal-backdrop absolute inset-0" data-booking-close></div>
     <div class="absolute inset-0 flex items-center justify-center p-4 overflow-y-auto">
-      <div class="booking-modal-panel relative w-full max-w-lg bg-charcoal border border-cream/20 rounded-sm shadow-2xl my-8" role="dialog" aria-labelledby="booking-title" aria-modal="true">
-        <button type="button" data-booking-close class="absolute top-4 left-4 text-cream/60 hover:text-cream transition-colors p-1" aria-label="סגור">
+      <div class="booking-modal-panel relative w-full max-w-lg bg-deep-midnight border border-cream-text/20 rounded-sm shadow-2xl my-8" role="dialog" aria-labelledby="booking-title" aria-modal="true">
+        <button type="button" data-booking-close class="absolute top-4 left-4 text-cream-text/60 hover:text-cream-text transition-colors p-1" aria-label="סגור">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
         <div class="p-6 pt-12">
-          <h2 id="booking-title" class="text-2xl font-bold text-cream mb-6 text-center">הזמנת תור</h2>
+          <h2 id="booking-title" class="text-2xl font-bold text-cream-text mb-6 text-center">בחירת מועד מחקר</h2>
 
-          <!-- Step 1: Service selection -->
           <div id="booking-step-0" class="booking-step is-active">
-            <p class="text-cream/70 text-sm mb-4">בחר שירות</p>
+            <p class="text-cream-text/70 text-sm mb-4">בחר שירות</p>
             <div id="booking-services" class="space-y-2 mb-6"></div>
-            <button type="button" id="booking-step0-next" disabled class="w-full py-3 rounded-sm font-semibold bg-cream/10 text-cream/50 border border-cream/20 cursor-not-allowed">המשך לבחירת תאריך</button>
+            <button type="button" id="booking-step0-next" disabled class="w-full py-3 rounded-sm font-semibold bg-cream-text/10 text-cream-text/50 border border-cream-text/20 cursor-not-allowed">המשך לבחירת תאריך</button>
           </div>
 
-          <!-- Step 2: Calendar -->
           <div id="booking-step-1" class="booking-step">
-            <p class="text-cream/70 text-sm mb-4">בחר תאריך</p>
+            <p class="text-cream-text/70 text-sm mb-4">בחר תאריך</p>
             <div class="flex justify-between items-center mb-4">
-              <button type="button" id="booking-cal-prev" class="p-2 text-cream/80 hover:text-copper transition-colors rounded" aria-label="חודש קודם">
+              <button type="button" id="booking-cal-prev" class="p-2 text-cream-text/80 hover:text-copper transition-colors rounded" aria-label="חודש קודם">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
               </button>
-              <span id="booking-month-year" class="font-semibold text-cream"></span>
-              <button type="button" id="booking-cal-next" class="p-2 text-cream/80 hover:text-copper transition-colors rounded" aria-label="חודש הבא">
+              <span id="booking-month-year" class="font-semibold text-cream-text"></span>
+              <button type="button" id="booking-cal-next" class="p-2 text-cream-text/80 hover:text-copper transition-colors rounded" aria-label="חודש הבא">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
               </button>
             </div>
             <div id="booking-calendar" class="grid grid-cols-7 gap-1 text-center text-sm"></div>
             <div class="flex gap-3 mt-6">
-              <button type="button" id="booking-step1-back" class="flex-1 py-3 rounded-sm font-semibold border border-cream/30 text-cream hover:bg-cream/10 transition-colors">חזור</button>
-              <button type="button" id="booking-step1-next" disabled class="flex-1 py-3 rounded-sm font-semibold bg-cream/10 text-cream/50 border border-cream/20 cursor-not-allowed">המשך לבחירת שעה</button>
+              <button type="button" id="booking-step1-back" class="flex-1 py-3 rounded-sm font-semibold border border-cream-text/30 text-cream-text hover:bg-cream-text/10 transition-colors">חזור</button>
+              <button type="button" id="booking-step1-next" disabled class="flex-1 py-3 rounded-sm font-semibold bg-cream-text/10 text-cream-text/50 border border-cream-text/20 cursor-not-allowed">המשך לבחירת שעה</button>
             </div>
           </div>
 
-          <!-- Step 3: Time slots -->
           <div id="booking-step-2" class="booking-step">
-            <p class="text-cream/70 text-sm mb-2">תאריך: <span id="booking-selected-date-label" class="text-cream font-medium"></span></p>
-            <p class="text-cream/70 text-sm mb-4">בחר שעה</p>
+            <p class="text-cream-text/70 text-sm mb-2">תאריך: <span id="booking-selected-date-label" class="text-cream-text font-medium"></span></p>
+            <p class="text-cream-text/70 text-sm mb-4">בחר שעה</p>
             <div id="booking-times" class="grid grid-cols-3 sm:grid-cols-4 gap-2"></div>
             <div class="flex gap-3 mt-6">
-              <button type="button" id="booking-step2-back" class="flex-1 py-3 rounded-sm font-semibold border border-cream/30 text-cream hover:bg-cream/10 transition-colors">חזור</button>
-              <button type="button" id="booking-step2-next" disabled class="flex-1 py-3 rounded-sm font-semibold bg-cream/10 text-cream/50 border border-cream/20 cursor-not-allowed">המשך לפרטים</button>
+              <button type="button" id="booking-step2-back" class="flex-1 py-3 rounded-sm font-semibold border border-cream-text/30 text-cream-text hover:bg-cream-text/10 transition-colors">חזור</button>
+              <button type="button" id="booking-step2-next" disabled class="flex-1 py-3 rounded-sm font-semibold bg-cream-text/10 text-cream-text/50 border border-cream-text/20 cursor-not-allowed">המשך לפרטים</button>
             </div>
           </div>
 
-          <!-- Step 4: Form -->
           <div id="booking-step-3" class="booking-step">
-            <p class="text-cream/70 text-sm mb-4">תור: <span id="booking-summary-datetime" class="text-cream font-medium"></span></p>
+            <p class="text-cream-text/70 text-sm mb-4">תור: <span id="booking-summary-datetime" class="text-cream-text font-medium"></span></p>
             <form id="booking-form" class="space-y-4">
               <div>
-                <label for="booking-name" class="block text-cream/80 text-sm mb-1">שם מלא</label>
-                <input type="text" id="booking-name" name="name" required class="w-full px-4 py-3 bg-cream/5 border border-cream/20 rounded-sm text-cream placeholder-cream/40 focus:border-copper focus:outline-none transition-colors" placeholder="שם מלא" dir="rtl" />
+                <label for="booking-name" class="block text-cream-text/80 text-sm mb-1">שם מלא</label>
+                <input type="text" id="booking-name" name="name" required class="w-full px-4 py-3 bg-cream-text/5 border border-cream-text/20 rounded-sm text-cream-text placeholder-cream-text/40 focus:border-copper focus:outline-none transition-colors" placeholder="שם מלא" dir="rtl" />
               </div>
               <div>
-                <label for="booking-phone" class="block text-cream/80 text-sm mb-1">מספר טלפון</label>
-                <input type="tel" id="booking-phone" name="phone" required class="w-full px-4 py-3 bg-cream/5 border border-cream/20 rounded-sm text-cream placeholder-cream/40 focus:border-copper focus:outline-none transition-colors" placeholder="050-0000000" dir="ltr" />
+                <label for="booking-phone" class="block text-cream-text/80 text-sm mb-1">מספר טלפון</label>
+                <input type="tel" id="booking-phone" name="phone" required class="w-full px-4 py-3 bg-cream-text/5 border border-cream-text/20 rounded-sm text-cream-text placeholder-cream-text/40 focus:border-copper focus:outline-none transition-colors" placeholder="050-0000000" dir="ltr" />
               </div>
               <div>
-                <label for="booking-email" class="block text-cream/80 text-sm mb-1">כתובת אימייל</label>
-                <input type="email" id="booking-email" name="email" required class="w-full px-4 py-3 bg-cream/5 border border-cream/20 rounded-sm text-cream placeholder-cream/40 focus:border-copper focus:outline-none transition-colors" placeholder="email@example.com" dir="ltr" />
+                <label for="booking-email" class="block text-cream-text/80 text-sm mb-1">כתובת אימייל</label>
+                <input type="email" id="booking-email" name="email" required class="w-full px-4 py-3 bg-cream-text/5 border border-cream-text/20 rounded-sm text-cream-text placeholder-cream-text/40 focus:border-copper focus:outline-none transition-colors" placeholder="email@example.com" dir="ltr" />
               </div>
             </form>
             <div class="flex gap-3 mt-6">
-              <button type="button" id="booking-step3-back" class="flex-1 py-3 rounded-sm font-semibold border border-cream/30 text-cream hover:bg-cream/10 transition-colors">חזור</button>
-              <button type="submit" id="booking-submit" form="booking-form" class="btn-book flex-1 py-3 rounded-sm font-bold text-cream border border-copper/50">
+              <button type="button" id="booking-step3-back" class="flex-1 py-3 rounded-sm font-semibold border border-cream-text/30 text-cream-text hover:bg-cream-text/10 transition-colors">חזור</button>
+              <button type="submit" id="booking-submit" form="booking-form" class="btn-book flex-1 py-3 rounded-sm font-bold text-cream-text border border-copper/50">
                 אישור תור
               </button>
             </div>
           </div>
 
-          <!-- Success message -->
           <div id="booking-success" class="booking-step text-center py-4">
-            <p class="text-cream font-medium mb-2">התור נשמר בהצלחה.</p>
-            <p class="text-cream/70 text-sm">נשלח אליך אימייל לאישור עם קישור להוספה ללוח השנה.</p>
-            <button type="button" data-booking-close class="mt-6 btn-book px-8 py-3 rounded-sm font-semibold text-cream">סגור</button>
+            <p class="text-cream-text font-medium mb-2">מועד המחקר והטיפוח נשמר בהצלחה.</p>
+            <p class="text-cream-text/70 text-sm text-balance">נשלח אליך אימייל לאישור עם קישור להוספה ללוח השנה.</p>
+            <button type="button" data-booking-close class="mt-6 btn-book px-8 py-3 rounded-sm font-semibold text-cream-text">סגור</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer class="py-12 px-6 md:px-12 border-t border-cream/10">
+  <footer class="py-12 px-6 md:px-12 border-t border-cream-text/10 bg-deep-midnight">
     <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-      <div class="text-cream/60 text-sm text-center md:text-right">
-        <p class="font-semibold text-cream/90 mb-1">אושר משעל – Barber Shop</p>
-        <p>הרוקמים 26, חולון (מרכז עזריאלי)</p>
+      <div class="flex items-center gap-2">
+        <img src="Logo.jpg" alt="הברבריה של הפרופסור" class="h-8 w-8 object-cover rounded-full border border-copper/30" loading="lazy" />
+        <div class="text-cream-text/60 text-sm text-center md:text-right">
+          <p class="font-semibold text-cream-text/90 mb-1">הברבריה של הפרופסור – Barbery</p>
+          <p>הרוקמים 26, חולון (מרכז עזריאלי)</p>
+        </div>
       </div>
       <div class="flex items-center gap-6">
-        <a href="#" class="text-cream/60 hover:text-copper transition-colors" aria-label="Facebook">Facebook</a>
-        <a href="#" class="text-cream/60 hover:text-copper transition-colors" aria-label="Instagram">Instagram</a>
-        <a href="tel:0500000000" class="text-cream/60 hover:text-copper transition-colors">050-000-0000</a>
+        <a href="#" class="text-cream-text/60 hover:text-copper transition-colors" aria-label="Facebook">Facebook</a>
+        <a href="#" class="text-cream-text/60 hover:text-copper transition-colors" aria-label="Instagram">Instagram</a>
+        <a href="tel:0500000000" class="text-cream-text/60 hover:text-copper transition-colors">050-000-0000</a>
       </div>
     </div>
   </footer>
@@ -469,15 +446,15 @@
       var HE_MONTHS = ['ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני', 'יולי', 'אוגוסט', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'];
       var STEP_TITLES = ['שלב 1: בחירת שירות', 'שלב 2: בחירת תאריך', 'שלב 3: בחירת שעה', 'שלב 4: פרטי לקוח'];
       var SERVICES = [
-        { id: 'haircut', nameHe: 'תספורת גברית', price: 80, durationMinutes: 30 },
-        { id: 'beard', nameHe: 'עיצוב זקן', price: 50, durationMinutes: 20 },
-        { id: 'shave', nameHe: 'גילוח מסורתי', price: 120, durationMinutes: 30 },
-        { id: 'full', nameHe: 'חבילת טיפוח מלאה', price: 220, durationMinutes: 80 }
+        { id: 'haircut', nameHe: 'התספורת המחושבת', price: 80, durationMinutes: 30 },
+        { id: 'beard', nameHe: 'עיצוב זקן מתמטי', price: 50, durationMinutes: 20 },
+        { id: 'shave', nameHe: 'גילוח מסורתי בשיטת הפרופסור', price: 120, durationMinutes: 30 },
+        { id: 'full', nameHe: 'תכנית הטיפוח המקיפה', price: 220, durationMinutes: 80 }
       ];
       var MOCK_BOOKED = [
-        '2026-02-23T12:00', '2026-02-23T14:30', '2026-02-23T16:00',
-        '2026-02-26T13:00', '2026-02-26T17:00',
-        '2026-02-27T12:30', '2026-02-27T15:00'
+        '2026-04-23T12:00', '2026-04-23T14:30', '2026-04-23T16:00',
+        '2026-04-26T13:00', '2026-04-26T17:00',
+        '2026-04-27T12:30', '2026-04-27T15:00'
       ];
       var today = new Date();
       today.setHours(0, 0, 0, 0);
@@ -535,6 +512,7 @@
       function openModal() {
         state.selectedService = null;
         state.viewMonth = new Date();
+        state.viewMonth.setMonth(3);
         state.selectedDate = null;
         state.selectedTime = null;
         if (state.viewMonth.getMonth() === today.getMonth() && state.viewMonth.getFullYear() === today.getFullYear()) {
@@ -549,7 +527,7 @@
         renderServices();
         renderCalendar();
         step0Next.disabled = true;
-        step0Next.className = 'w-full py-3 rounded-sm font-semibold bg-cream/10 text-cream/50 border border-cream/20 cursor-not-allowed';
+        step0Next.className = 'w-full py-3 rounded-sm font-semibold bg-cream-text/10 text-cream-text/50 border border-cream-text/20 cursor-not-allowed';
         modal.classList.remove('hidden');
         modal.setAttribute('aria-hidden', 'false');
       }
@@ -569,10 +547,10 @@
           setStepTitle(1);
           if (state.selectedDate) {
             step1Next.disabled = false;
-            step1Next.className = 'flex-1 py-3 rounded-sm font-semibold border border-copper text-copper hover:bg-copper hover:text-charcoal transition-colors';
+            step1Next.className = 'flex-1 py-3 rounded-sm font-semibold border border-copper text-copper hover:bg-copper hover:text-deep-midnight transition-colors';
           } else {
             step1Next.disabled = true;
-            step1Next.className = 'flex-1 py-3 rounded-sm font-semibold bg-cream/10 text-cream/50 border border-cream/20 cursor-not-allowed';
+            step1Next.className = 'flex-1 py-3 rounded-sm font-semibold bg-cream-text/10 text-cream-text/50 border border-cream-text/20 cursor-not-allowed';
           }
         }
         if (n === 2) { step2.classList.add('is-active'); setStepTitle(2); renderTimeSlots(); }
@@ -587,7 +565,7 @@
       }
       function renderServices() {
         servicesEl.innerHTML = SERVICES.map(function (s) {
-          return '<button type="button" class="service-option w-full text-right py-3 px-4 rounded-sm border border-cream/20 text-cream flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1" data-service-id="' + s.id + '">' +
+          return '<button type="button" class="service-option w-full text-right py-3 px-4 rounded-sm border border-cream-text/20 text-cream-text flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1" data-service-id="' + s.id + '">' +
             '<span class="font-medium">' + s.nameHe + '</span>' +
             '<span class="text-copper font-bold">₪' + s.price + ' · ' + s.durationMinutes + ' דק׳</span>' +
             '</button>';
@@ -599,7 +577,7 @@
             servicesEl.querySelectorAll('.service-option').forEach(function (b) { b.classList.remove('selected'); });
             btn.classList.add('selected');
             step0Next.disabled = false;
-            step0Next.className = 'w-full py-3 rounded-sm font-semibold border border-copper text-copper hover:bg-copper hover:text-charcoal transition-colors';
+            step0Next.className = 'w-full py-3 rounded-sm font-semibold border border-copper text-copper hover:bg-copper hover:text-deep-midnight transition-colors';
           });
         });
       }
@@ -615,7 +593,7 @@
         var lastDay = end.getDate();
         var cells = [];
         var i, d, key, hours, disabled, past, selected;
-        for (i = 0; i < 7; i++) cells.push('<span class="text-cream/50 text-xs py-1">' + HE_DAYS[i] + '</span>');
+        for (i = 0; i < 7; i++) cells.push('<span class="text-cream-text/50 text-xs py-1">' + HE_DAYS[i] + '</span>');
         d = new Date(start);
         for (i = 0; i < 42; i++) {
           key = dateKey(d);
@@ -636,7 +614,7 @@
             state.selectedDate = new Date(btn.dataset.date + 'T12:00:00');
             renderCalendar();
             step1Next.disabled = false;
-            step1Next.className = 'flex-1 py-3 rounded-sm font-semibold border border-copper text-copper hover:bg-copper hover:text-charcoal transition-colors';
+            step1Next.className = 'flex-1 py-3 rounded-sm font-semibold border border-copper text-copper hover:bg-copper hover:text-deep-midnight transition-colors';
           });
         });
       }
@@ -657,19 +635,19 @@
           }
         }
         timesEl.innerHTML = slots.map(function (s) {
-          return '<button type="button" class="time-slot py-2 rounded-sm border border-cream/20 text-cream/90 text-sm ' +
+          return '<button type="button" class="time-slot py-2 rounded-sm border border-cream-text/20 text-cream-text/90 text-sm ' +
             (s.taken ? 'taken' : '') + '" ' + (s.taken ? 'disabled' : '') + ' data-slot="' + s.key + '">' + s.label + '</button>';
         }).join('');
         state.selectedTime = null;
         step2Next.disabled = true;
-        step2Next.className = 'flex-1 py-3 rounded-sm font-semibold bg-cream/10 text-cream/50 border border-cream/20 cursor-not-allowed';
+        step2Next.className = 'flex-1 py-3 rounded-sm font-semibold bg-cream-text/10 text-cream-text/50 border border-cream-text/20 cursor-not-allowed';
         timesEl.querySelectorAll('.time-slot:not(.taken)').forEach(function (btn) {
           btn.addEventListener('click', function () {
             timesEl.querySelectorAll('.time-slot').forEach(function (b) { b.classList.remove('selected'); });
             btn.classList.add('selected');
             state.selectedTime = btn.dataset.slot;
             step2Next.disabled = false;
-            step2Next.className = 'flex-1 py-3 rounded-sm font-semibold border border-copper text-copper hover:bg-copper hover:text-charcoal transition-colors';
+            step2Next.className = 'flex-1 py-3 rounded-sm font-semibold border border-copper text-copper hover:bg-copper hover:text-deep-midnight transition-colors';
           });
         });
       }
@@ -729,7 +707,7 @@
             goToStep('success');
           })
           .catch(function () {
-            alert('אירעה שגיאה. נסה שוב או צור קשר בטלפון.');
+            alert('אירעה שגיאה בקביעת הפגישה המחושבת. נסה שוב או צור קשר בטלפון.');
           })
           .finally(function () {
             submitBtn.disabled = false;
