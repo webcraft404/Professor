@@ -1,10 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
-  "rewrites": [
-    {
-      "source": "/((?!public/|api/|fonts/).*)",
-      "destination": "/index.html"
-    }
-  ]
+  "framework": null,
+  "buildCommand": ""
 }
