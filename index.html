@@ -13,6 +13,29 @@
   
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   
+  <!-- #region agent log -->
+  <script>
+  window.addEventListener('DOMContentLoaded', function() {
+    var endpoint = 'http://127.0.0.1:7889/ingest/181de734-1636-403c-8cac-18934ab0fe33';
+    var headers = {'Content-Type':'application/json','X-Debug-Session-Id':'206e15'};
+    fetch(endpoint,{method:'POST',headers:headers,body:JSON.stringify({sessionId:'206e15',location:'index.html:head',message:'page-loaded',data:{url:location.href,readyState:document.readyState},timestamp:Date.now(),hypothesisId:'H1-H3'})}).catch(function(){});
+    var logo = document.querySelector('img[alt*="Logo"]');
+    if (logo) {
+      var img = new Image();
+      img.onload = function(){ fetch(endpoint,{method:'POST',headers:headers,body:JSON.stringify({sessionId:'206e15',location:'index.html:logo',message:'logo-loaded-ok',data:{src:logo.src,naturalW:img.naturalWidth},timestamp:Date.now(),hypothesisId:'H4'})}).catch(function(){}); };
+      img.onerror = function(){ fetch(endpoint,{method:'POST',headers:headers,body:JSON.stringify({sessionId:'206e15',location:'index.html:logo',message:'logo-load-FAILED',data:{src:logo.src},timestamp:Date.now(),hypothesisId:'H4'})}).catch(function(){}); };
+      img.src = logo.src;
+    }
+    var gal1 = document.querySelector('img[alt*="תמונה 1"]');
+    if (gal1) {
+      var gi = new Image();
+      gi.onload = function(){ fetch(endpoint,{method:'POST',headers:headers,body:JSON.stringify({sessionId:'206e15',location:'index.html:gallery1',message:'gallery1-loaded-ok',data:{src:gal1.src,naturalW:gi.naturalWidth},timestamp:Date.now(),hypothesisId:'H4'})}).catch(function(){}); };
+      gi.onerror = function(){ fetch(endpoint,{method:'POST',headers:headers,body:JSON.stringify({sessionId:'206e15',location:'index.html:gallery1',message:'gallery1-load-FAILED',data:{src:gal1.src},timestamp:Date.now(),hypothesisId:'H4'})}).catch(function(){}); };
+      gi.src = gal1.src;
+    }
+  });
+  </script>
+  <!-- #endregion -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
