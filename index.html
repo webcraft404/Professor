@@ -813,7 +813,7 @@
         document.getElementById('booking-step-' + n).classList.add('is-active');
         elements.title.textContent = personalState.isRescheduling ? 'שינוי תור: ' + STEP_TITLES[n] : STEP_TITLES[n];
 
-        if (n === 3) renderTimeSlots();
+        if (n === 3) { fetchBookedSlots(state.selectedBarber.name).then(function(){ renderTimeSlots(); }); }
         if (n === 4) {
           var sLabel = state.selectedService ? state.selectedService.nameHe + ' אצל ' + state.selectedBarber.name + ' • ' : '';
           elements.summary.textContent = sLabel + dateKey(state.selectedDate).split('-').reverse().join('/') + ' בשעה ' + state.selectedTime.slice(11, 16);
