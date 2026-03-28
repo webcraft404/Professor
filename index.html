@@ -140,7 +140,7 @@
     .line-active { border-color: var(--dark) !important; }
 
     /* Accessibility */
-    body.high-contrast { filter: contrast(1.4); }
+    html.high-contrast { filter: contrast(1.4); }
     body.highlight-links a { outline: 2px solid var(--accent) !important; outline-offset: 2px; }
     *:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
     .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
@@ -1253,7 +1253,7 @@
           if(action==='font-up'&&fontSize<140){fontSize+=10;document.documentElement.style.fontSize=fontSize+'%';}
           if(action==='font-down'&&fontSize>80){fontSize-=10;document.documentElement.style.fontSize=fontSize+'%';}
           if(action==='font-reset'){fontSize=100;document.documentElement.style.fontSize='';}
-          if(action==='contrast'){document.body.classList.toggle('high-contrast');btn.textContent=document.body.classList.contains('high-contrast')?'ניגודיות רגילה':'ניגודיות גבוהה';}
+          if(action==='contrast'){document.documentElement.classList.toggle('high-contrast');btn.textContent=document.documentElement.classList.contains('high-contrast')?'ניגודיות רגילה':'ניגודיות גבוהה';}
           if(action==='links'){document.body.classList.toggle('highlight-links');btn.textContent=document.body.classList.contains('highlight-links')?'ביטול הדגשה':'הדגשת קישורים';}
           if(action==='animations'){
             var paused=document.body.classList.toggle('a11y-no-anim');
