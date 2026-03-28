@@ -701,12 +701,9 @@
       };
 
       // *** Live Updates ***
-      var _rtChannel = supabaseClient
+      supabaseClient
         .channel('public:appointments')
         .on('postgres_changes', { event: '*', schema: 'public', table: 'appointments' }, async (payload) => {
-          // #region agent log
-          fetch('http://127.0.0.1:7889/ingest/181de734-1636-403c-8cac-18934ab0fe33',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'206e15'},body:JSON.stringify({sessionId:'206e15',location:'index.html:realtime',message:'realtime-event',data:{eventType:payload.eventType,newRecord:payload.new?{id:payload.new.id,start_time:payload.new.start_time,barber_name:payload.new.barber_name}:null,modalOpen:!bookingModal.classList.contains('hidden'),hasBarber:!!state.selectedBarber},timestamp:Date.now(),hypothesisId:'H2'})}).catch(function(){});
-          // #endregion
           if (state.selectedBarber && !bookingModal.classList.contains('hidden')) {
             await fetchBookedSlots(state.selectedBarber.name);
             if (document.getElementById('booking-step-3').classList.contains('is-active')) {
@@ -714,11 +711,7 @@
             }
           }
         })
-        .subscribe(function(status){
-          // #region agent log
-          fetch('http://127.0.0.1:7889/ingest/181de734-1636-403c-8cac-18934ab0fe33',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'206e15'},body:JSON.stringify({sessionId:'206e15',location:'index.html:realtime-status',message:'subscription-status',data:{status:status},timestamp:Date.now(),hypothesisId:'H2'})}).catch(function(){});
-          // #endregion
-        });
+        .subscribe();
 
       // פונקציה מעודכנת לשליפת שעות תפוסות שמטפלת נכון באזורי זמן (Timezones)
       async function fetchBookedSlots(barberName) {
@@ -734,9 +727,6 @@
           .eq('barber_id', BARBER_ID)
           .eq('barber_name', barberName)
           .gte('start_time', searchStart);
-        // #region agent log
-        fetch('http://127.0.0.1:7889/ingest/181de734-1636-403c-8cac-18934ab0fe33',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'206e15'},body:JSON.stringify({sessionId:'206e15',location:'index.html:fetchBookedSlots',message:'fetch-result',data:{barberName:barberName,rowCount:data?data.length:0,rows:data?data.slice(0,10):null,error:error?error.message:null},timestamp:Date.now(),hypothesisId:'H1-H3'})}).catch(function(){});
-        // #endregion
         
         if (data) {
           bookedSlots = data
@@ -1217,7 +1207,7 @@
   </div>
 
   <!-- Accessibility Floating Button + Panel -->
-  <div id="a11y-widget" class="fixed bottom-20 left-4 z-[90]">
+  <div id="a11y-widget" class="fixed bottom-6 left-6 z-[90]">
     <button type="button" id="a11y-toggle" class="w-12 h-12 rounded-full bg-brand-900 text-white shadow-lg flex items-center justify-center hover:bg-brand-accent transition-colors" aria-label="אפשרויות נגישות">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="2"/><path d="M12 7v5m0 0l-3 5m3-5l3 5M7 10.5h10"/></svg>
     </button>
