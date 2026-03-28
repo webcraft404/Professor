@@ -624,7 +624,7 @@
   <script>
     // System Config & Supabase
     const SUPABASE_URL = 'https://otwdyypeagxraavdgxqa.supabase.co'; 
-    const SUPABASE_ANON_KEY = 'sb_publishable_XdOUgeOPIiCSO70sKUkenA_hjs6BOaJ';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im90d2R5eXBlYWd4cmFhdmRneHFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI0MzYxMDgsImV4cCI6MjA4ODAxMjEwOH0.fl_0r65L6F6BvZg6j4MqjtrTusLyD3UTNQtmKtkO_1c';
     const BARBER_ID = 'dbb8bc7f-4eec-47f4-813b-422d28c7e39c';
 
     const BARBERS = [
@@ -651,6 +651,15 @@
       var bookedSlots = []; 
       var today = new Date();
       today.setHours(0, 0, 0, 0);
+
+      function getLocalISOString(d) {
+        var y = d.getFullYear();
+        var m = String(d.getMonth() + 1).padStart(2, '0');
+        var day = String(d.getDate()).padStart(2, '0');
+        var h = String(d.getHours()).padStart(2, '0');
+        var min = String(d.getMinutes()).padStart(2, '0');
+        return y + '-' + m + '-' + day + 'T' + h + ':' + min + ':00';
+      }
 
       function getHoursForDate(d) {
         var day = d.getDay();
@@ -708,10 +717,9 @@
       async function fetchBookedSlots(barberName) {
         if (!barberName) return;
         
-        // מגדירים שנתחיל לחפש תורים מהיום והלאה, אבל הופכים את זה לפורמט ISO של השרת
         var d = new Date();
         d.setHours(0,0,0,0);
-        var searchStart = d.toISOString();
+        var searchStart = getLocalISOString(d);
 
         const { data, error } = await supabaseClient
           .from('appointments')
@@ -1053,7 +1061,7 @@
 
         var d = new Date();
         d.setHours(0,0,0,0);
-        var searchStart = d.toISOString();
+        var searchStart = getLocalISOString(d);
 
         // 1. מחפשים במסד נתונים *רק* לפי טלפון (החיפוש הכי מדויק)
         const { data, error } = await supabaseClient
