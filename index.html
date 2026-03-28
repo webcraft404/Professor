@@ -728,6 +728,9 @@
           .eq('barber_name', barberName)
           .gte('start_time', searchStart);
         
+        // #region agent log
+        fetch('http://127.0.0.1:7889/ingest/181de734-1636-403c-8cac-18934ab0fe33',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'206e15'},body:JSON.stringify({sessionId:'206e15',location:'index.html:fetchBookedSlots',message:'query-result',data:{barberName:barberName,barberId:BARBER_ID,searchStart:searchStart,error:error?error.message:null,rowCount:data?data.length:0,rawRows:data?data.slice(0,5):null},timestamp:Date.now(),hypothesisId:'H1-H4'})}).catch(function(){});
+        // #endregion
         if (data) {
           bookedSlots = data
             .filter(app => {
@@ -744,6 +747,9 @@
                let m = String(appDate.getMinutes()).padStart(2, '0');
                return dateKey(appDate) + 'T' + h + ':' + m;
             });
+          // #region agent log
+          fetch('http://127.0.0.1:7889/ingest/181de734-1636-403c-8cac-18934ab0fe33',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'206e15'},body:JSON.stringify({sessionId:'206e15',location:'index.html:fetchBookedSlots:mapped',message:'mapped-slots',data:{bookedSlots:bookedSlots},timestamp:Date.now(),hypothesisId:'H4'})}).catch(function(){});
+          // #endregion
         }
       }
 
