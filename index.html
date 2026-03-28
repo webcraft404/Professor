@@ -998,17 +998,10 @@
         let resultError = null;
 
         if (personalState.isRescheduling && personalState.currentAppt) {
-          // #region agent log
-          fetch('http://127.0.0.1:7889/ingest/181de734-1636-403c-8cac-18934ab0fe33',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'206e15'},body:JSON.stringify({sessionId:'206e15',location:'index.html:reschedule',message:'update-attempt',data:{apptId:personalState.currentAppt.id,newStartTime:startDateTime,payload:payload},timestamp:Date.now(),hypothesisId:'H1-H3'})}).catch(function(){});
-          // #endregion
-          const { error, data: updData, count } = await supabaseClient
+          const { error } = await supabaseClient
             .from('appointments')
             .update(payload)
-            .eq('id', personalState.currentAppt.id)
-            .select();
-          // #region agent log
-          fetch('http://127.0.0.1:7889/ingest/181de734-1636-403c-8cac-18934ab0fe33',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'206e15'},body:JSON.stringify({sessionId:'206e15',location:'index.html:reschedule:result',message:'update-result',data:{error:error?error.message:null,errorCode:error?error.code:null,updatedRows:updData?updData.length:0,updatedData:updData},timestamp:Date.now(),hypothesisId:'H1'})}).catch(function(){});
-          // #endregion
+            .eq('id', personalState.currentAppt.id);
           resultError = error;
         } else {
           // תור חדש
