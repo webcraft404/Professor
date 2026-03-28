@@ -8,6 +8,9 @@
   <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/webcraft404/Professor/main/logo.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin />
+  <link rel="preload" href="https://raw.githubusercontent.com/webcraft404/Professor/main/fonts/Wausau-Regular.otf" as="font" type="font/otf" crossorigin />
+  <link rel="preload" href="https://raw.githubusercontent.com/webcraft404/Professor/main/fonts/Legitima-Regular.otf" as="font" type="font/otf" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   
@@ -178,7 +181,7 @@
 
   <section id="hero" class="snap-section w-full min-h-[100dvh] relative flex items-center justify-center pt-20 pb-16 overflow-hidden">
     <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('https://raw.githubusercontent.com/webcraft404/Professor/main/image10.jpg');"></div>
-    <div class="absolute inset-0 bg-white/50 backdrop-blur-md"></div>
+    <div class="absolute inset-0 bg-white/60"></div>
     
     <div class="relative z-10 text-center px-6 max-w-3xl mx-auto">
       <span class="est-badge opacity-0 invisible inline-block py-1 px-3 rounded-full bg-brand-100 text-brand-800 text-xs font-semibold tracking-wider mb-6">EST. 2013</span>
@@ -505,26 +508,6 @@
     </div>
   </div>
 
-  <!-- #region agent log -->
-  <script>
-  (function(){
-    var ep='http://127.0.0.1:7889/ingest/181de734-1636-403c-8cac-18934ab0fe33';
-    var hd={'Content-Type':'application/json','X-Debug-Session-Id':'206e15'};
-    var t0=performance.now();
-    if(document.fonts&&document.fonts.ready){
-      document.fonts.ready.then(function(){
-        var elapsed=Math.round(performance.now()-t0);
-        var loaded=[];document.fonts.forEach(function(f){if(f.status==='loaded')loaded.push(f.family);});
-        fetch(ep,{method:'POST',headers:hd,body:JSON.stringify({sessionId:'206e15',location:'index.html:fonts',message:'fonts-ready',data:{elapsedMs:elapsed,loadedFonts:loaded,wausauSrc:'github-raw',legitimaSrc:'github-raw'},timestamp:Date.now(),hypothesisId:'H4-H5'})}).catch(function(){});
-      });
-    }
-    var w=new FontFace('Wausau','url(https://raw.githubusercontent.com/webcraft404/Professor/main/fonts/Wausau-Regular.otf)');
-    w.load().then(function(){fetch(ep,{method:'POST',headers:hd,body:JSON.stringify({sessionId:'206e15',location:'index.html:wausau',message:'wausau-load-time',data:{ms:Math.round(performance.now()-t0)},timestamp:Date.now(),hypothesisId:'H5'})}).catch(function(){});}).catch(function(){});
-    var l=new FontFace('Legitima','url(https://raw.githubusercontent.com/webcraft404/Professor/main/fonts/Legitima-Regular.otf)');
-    l.load().then(function(){fetch(ep,{method:'POST',headers:hd,body:JSON.stringify({sessionId:'206e15',location:'index.html:legitima',message:'legitima-load-time',data:{ms:Math.round(performance.now()-t0)},timestamp:Date.now(),hypothesisId:'H5'})}).catch(function(){});}).catch(function(){});
-  })();
-  </script>
-  <!-- #endregion -->
   <script>
     // Navbar Mobile Toggle Logic
     (function () {
@@ -553,13 +536,6 @@
     // GSAP Animations (Updated to slide from bottom)
     document.addEventListener("DOMContentLoaded", (event) => {
       gsap.registerPlugin(ScrollTrigger);
-      <!-- #region agent log -->
-      var _dbgEndpoint='http://127.0.0.1:7889/ingest/181de734-1636-403c-8cac-18934ab0fe33';
-      var _dbgHeaders={'Content-Type':'application/json','X-Debug-Session-Id':'206e15'};
-      var _dbgScrollCount=0;var _dbgLastScroll=0;
-      window.addEventListener('scroll',function(){_dbgScrollCount++;var now=performance.now();if(_dbgScrollCount===1)_dbgLastScroll=now;if(_dbgScrollCount===60){fetch(_dbgEndpoint,{method:'POST',headers:_dbgHeaders,body:JSON.stringify({sessionId:'206e15',location:'index.html:scroll',message:'scroll-perf',data:{frames:60,elapsed:Math.round(now-_dbgLastScroll),avgMs:Math.round((now-_dbgLastScroll)/60),hasBackdropFilter:!!document.querySelector('[class*=backdrop-blur]'),snapType:getComputedStyle(document.documentElement).scrollSnapType},timestamp:Date.now(),hypothesisId:'H1-H3'})}).catch(function(){});_dbgScrollCount=0;_dbgLastScroll=now;}},{passive:true});
-      <!-- #endregion -->
-
       // 1. Hero Section Animation (Runs ONLY ONCE on load)
       const tlHero = gsap.timeline();
       tlHero.fromTo(".hero-text > *", 
