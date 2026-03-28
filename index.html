@@ -1200,6 +1200,14 @@
   </div>
 
   <!-- Accessibility Floating Button + Panel -->
+  <!-- #region agent log -->
+  <script>
+  document.addEventListener('DOMContentLoaded',function(){
+    var w=document.getElementById('a11y-widget');
+    if(w){var cs=getComputedStyle(w);fetch('http://127.0.0.1:7889/ingest/181de734-1636-403c-8cac-18934ab0fe33',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'206e15'},body:JSON.stringify({sessionId:'206e15',location:'index.html:a11y-widget',message:'widget-computed-style',data:{position:cs.position,bottom:cs.bottom,left:cs.left,zIndex:cs.zIndex,display:cs.display,visibility:cs.visibility,offsetParent:w.offsetParent?w.offsetParent.tagName:'null',parentTag:w.parentElement.tagName,htmlOverflow:getComputedStyle(document.documentElement).overflow,bodyOverflow:getComputedStyle(document.body).overflow},timestamp:Date.now(),hypothesisId:'H1-H3'})}).catch(function(){});}
+  });
+  </script>
+  <!-- #endregion -->
   <div id="a11y-widget" class="fixed bottom-20 left-4 z-[90]">
     <button type="button" id="a11y-toggle" class="w-12 h-12 rounded-full bg-brand-900 text-white shadow-lg flex items-center justify-center hover:bg-brand-accent transition-colors" aria-label="אפשרויות נגישות">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="2"/><path d="M12 7v5m0 0l-3 5m3-5l3 5M7 10.5h10"/></svg>
