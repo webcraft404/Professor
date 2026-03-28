@@ -701,9 +701,12 @@
       };
 
       // *** Live Updates ***
-      supabaseClient
+      var _rtChannel = supabaseClient
         .channel('public:appointments')
         .on('postgres_changes', { event: '*', schema: 'public', table: 'appointments' }, async (payload) => {
+          // #region agent log
+          fetch('http://127.0.0.1:7889/ingest/181de734-1636-403c-8cac-18934ab0fe33',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'206e15'},body:JSON.stringify({sessionId:'206e15',location:'index.html:realtime',message:'realtime-event',data:{eventType:payload.eventType,newRecord:payload.new?{id:payload.new.id,start_time:payload.new.start_time,barber_name:payload.new.barber_name}:null,modalOpen:!bookingModal.classList.contains('hidden'),hasBarber:!!state.selectedBarber},timestamp:Date.now(),hypothesisId:'H2'})}).catch(function(){});
+          // #endregion
           if (state.selectedBarber && !bookingModal.classList.contains('hidden')) {
             await fetchBookedSlots(state.selectedBarber.name);
             if (document.getElementById('booking-step-3').classList.contains('is-active')) {
@@ -711,7 +714,11 @@
             }
           }
         })
-        .subscribe();
+        .subscribe(function(status){
+          // #region agent log
+          fetch('http://127.0.0.1:7889/ingest/181de734-1636-403c-8cac-18934ab0fe33',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'206e15'},body:JSON.stringify({sessionId:'206e15',location:'index.html:realtime-status',message:'subscription-status',data:{status:status},timestamp:Date.now(),hypothesisId:'H2'})}).catch(function(){});
+          // #endregion
+        });
 
       // פונקציה מעודכנת לשליפת שעות תפוסות שמטפלת נכון באזורי זמן (Timezones)
       async function fetchBookedSlots(barberName) {
@@ -727,6 +734,9 @@
           .eq('barber_id', BARBER_ID)
           .eq('barber_name', barberName)
           .gte('start_time', searchStart);
+        // #region agent log
+        fetch('http://127.0.0.1:7889/ingest/181de734-1636-403c-8cac-18934ab0fe33',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'206e15'},body:JSON.stringify({sessionId:'206e15',location:'index.html:fetchBookedSlots',message:'fetch-result',data:{barberName:barberName,rowCount:data?data.length:0,rows:data?data.slice(0,10):null,error:error?error.message:null},timestamp:Date.now(),hypothesisId:'H1-H3'})}).catch(function(){});
+        // #endregion
         
         if (data) {
           bookedSlots = data
