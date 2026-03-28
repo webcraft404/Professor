@@ -721,6 +721,10 @@
         d.setHours(0,0,0,0);
         var searchStart = getLocalISOString(d);
 
+        // #region agent log
+        var _dbgAll = await supabaseClient.from('appointments').select('id, start_time, barber_id, barber_name').limit(5);
+        fetch('http://127.0.0.1:7889/ingest/181de734-1636-403c-8cac-18934ab0fe33',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'206e15'},body:JSON.stringify({sessionId:'206e15',location:'index.html:fetchBookedSlots:rls-test',message:'unfiltered-query',data:{error:_dbgAll.error?_dbgAll.error.message:null,count:_dbgAll.data?_dbgAll.data.length:0,sample:_dbgAll.data?_dbgAll.data.slice(0,3):null},timestamp:Date.now(),hypothesisId:'H5'})}).catch(function(){});
+        // #endregion
         const { data, error } = await supabaseClient
           .from('appointments')
           .select('start_time, id')
@@ -729,7 +733,7 @@
           .gte('start_time', searchStart);
         
         // #region agent log
-        fetch('http://127.0.0.1:7889/ingest/181de734-1636-403c-8cac-18934ab0fe33',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'206e15'},body:JSON.stringify({sessionId:'206e15',location:'index.html:fetchBookedSlots',message:'query-result',data:{barberName:barberName,barberId:BARBER_ID,searchStart:searchStart,error:error?error.message:null,rowCount:data?data.length:0,rawRows:data?data.slice(0,5):null},timestamp:Date.now(),hypothesisId:'H1-H4'})}).catch(function(){});
+        fetch('http://127.0.0.1:7889/ingest/181de734-1636-403c-8cac-18934ab0fe33',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'206e15'},body:JSON.stringify({sessionId:'206e15',location:'index.html:fetchBookedSlots',message:'filtered-query',data:{barberName:barberName,barberId:BARBER_ID,searchStart:searchStart,error:error?error.message:null,rowCount:data?data.length:0,rawRows:data?data.slice(0,5):null},timestamp:Date.now(),hypothesisId:'H1-H4'})}).catch(function(){});
         // #endregion
         if (data) {
           bookedSlots = data
