@@ -1,5 +1,5 @@
 {
-  "name": "osher-mishal-booking",
+  "name": "professor",
   "version": "1.0.0",
   "description": "Booking system for Osher Mishal Barber Shop",
   "main": "server.js",
