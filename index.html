@@ -119,15 +119,15 @@
     @keyframes stepIn { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
 
     /* Calendar & Slots */
-    .calendar-day, .time-slot, .service-option, .barber-option { transition: all 0.2s ease; }
+    .calendar-day, .time-slot, .service-option { transition: all 0.2s ease; }
     .calendar-day:not(.disabled):not(.past):hover { background: #F3F4F6; }
     .calendar-day.selected { background: var(--accent); color: white; font-weight: bold; }
     .calendar-day.disabled, .calendar-day.past { opacity: 0.3; cursor: not-allowed; }
     .time-slot:not(.taken):hover { border-color: var(--accent); background: #F9FAFB; }
     .time-slot.selected { border-color: var(--accent); background: var(--accent); color: white; }
     .time-slot.taken { opacity: 0.3; cursor: not-allowed; background: #F3F4F6; }
-    .service-option:hover, .barber-option:hover { border-color: var(--accent); }
-    .service-option.selected, .barber-option.selected { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); background: #F9FAFB; }
+    .service-option:hover { border-color: var(--accent); }
+    .service-option.selected { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); background: #F9FAFB; }
 
     /* Progress Bar Dynamics */
     .prog-circle { transition: all 0.3s ease; }
@@ -396,7 +396,7 @@
           <p class="text-sm text-brand-800/70 mb-6">זה התור הקרוב שלך במספרה:</p>
           
           <div class="bg-gray-50 border border-gray-200 rounded-2xl p-5 mb-8 text-right">
-            <div class="font-bold text-lg text-brand-900 mb-1" id="pa-barber-service">תספורת אצל נתי</div>
+            <div class="font-bold text-lg text-brand-900 mb-1" id="pa-barber-service">תספורת</div>
             <div class="text-brand-800 font-medium" id="pa-date">יום רביעי, 15/04/2026</div>
             <div class="text-brand-accent font-bold" id="pa-time">בשעה 14:30</div>
           </div>
@@ -424,7 +424,7 @@
     
     <div class="modal-panel relative w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
       <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-white z-10">
-        <h2 id="booking-title" class="text-xl font-bold text-brand-900">איזה ספר?</h2>
+        <h2 id="booking-title" class="text-xl font-bold text-brand-900">בחירת שירות</h2>
         <button type="button" data-booking-close class="text-gray-400 hover:text-gray-800 transition-colors p-2 rounded-full hover:bg-gray-100" aria-label="סגור">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
@@ -435,17 +435,9 @@
         <div id="booking-progress" class="flex items-center justify-between w-full mb-8 overflow-x-auto no-scrollbar gap-2 px-1">
           </div>
 
-        <div id="booking-step-0" class="step-container is-active">
-          <div id="booking-barbers" class="space-y-3 mb-6"></div>
-          <button type="button" id="booking-step0-next" disabled class="w-full py-3.5 rounded-xl font-medium bg-gray-100 text-gray-400 cursor-not-allowed transition-all">המשך לבחירת שירות</button>
-        </div>
-
-        <div id="booking-step-1" class="step-container">
+        <div id="booking-step-1" class="step-container is-active">
           <div id="booking-services" class="space-y-3 mb-6"></div>
-          <div class="flex gap-3">
-            <button type="button" id="booking-step1-back" class="w-1/3 py-3 rounded-xl font-medium border border-gray-200 text-brand-800 hover:bg-gray-50 transition-colors">חזור</button>
-            <button type="button" id="booking-step1-next" disabled class="w-2/3 py-3 rounded-xl font-medium bg-gray-100 text-gray-400 cursor-not-allowed transition-all">המשך לתאריך</button>
-          </div>
+          <button type="button" id="booking-step1-next" disabled class="w-full py-3.5 rounded-xl font-medium bg-gray-100 text-gray-400 cursor-not-allowed transition-all">המשך לתאריך</button>
         </div>
 
         <div id="booking-step-2" class="step-container">
@@ -619,19 +611,14 @@
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im90d2R5eXBlYWd4cmFhdmRneHFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI0MzYxMDgsImV4cCI6MjA4ODAxMjEwOH0.fl_0r65L6F6BvZg6j4MqjtrTusLyD3UTNQtmKtkO_1c';
     const BARBER_ID = 'dbb8bc7f-4eec-47f4-813b-422d28c7e39c';
 
-    const BARBERS = [
-      { name: 'נתי' },
-      { name: 'שי' },
-      { name: 'לירן' },
-      { name: 'עמית' }
-    ];
+    const DEFAULT_BARBER = { name: 'אורן' };
 
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     (function () {
       var HE_DAYS = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ש'];
       var HE_MONTHS = ['ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני', 'יולי', 'אוגוסט', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'];
-      var STEP_TITLES = ['איזה ספר?', 'בחירת שירות', 'תאריך פנוי', 'שעה נוחה', 'פרטים אישיים'];
+      var STEP_TITLES = [null, 'בחירת שירות', 'תאריך פנוי', 'שעה נוחה', 'פרטים אישיים'];
       
       var SERVICES = [
         { id: 'haircut', nameHe: 'תספורת קלאסית', price: 80, durationMinutes: 30 },
@@ -676,13 +663,13 @@
       var elements = {
         title: document.getElementById('booking-title'),
         services: document.getElementById('booking-services'),
-        barbers: document.getElementById('booking-barbers'),
+        
         calendar: document.getElementById('booking-calendar'),
         monthYear: document.getElementById('booking-month-year'),
         times: document.getElementById('booking-times'),
         dateLabel: document.getElementById('booking-selected-date-label'),
         summary: document.getElementById('booking-summary-datetime'),
-        nextBtn0: document.getElementById('booking-step0-next'),
+        
         nextBtn1: document.getElementById('booking-step1-next'),
         nextBtn2: document.getElementById('booking-step2-next'),
         nextBtn3: document.getElementById('booking-step3-next'),
@@ -697,7 +684,7 @@
         .channel('public:appointments')
         .on('postgres_changes', { event: '*', schema: 'public', table: 'appointments' }, async (payload) => {
           if (state.selectedBarber && !bookingModal.classList.contains('hidden')) {
-            await fetchBookedSlots(state.selectedBarber.name);
+            await fetchBookedSlots();
             if (document.getElementById('booking-step-3').classList.contains('is-active')) {
               renderTimeSlots();
             }
@@ -706,9 +693,7 @@
         .subscribe();
 
       // פונקציה מעודכנת לשליפת שעות תפוסות שמטפלת נכון באזורי זמן (Timezones)
-      async function fetchBookedSlots(barberName) {
-        if (!barberName) return;
-        
+      async function fetchBookedSlots() {
         var d = new Date();
         d.setHours(0,0,0,0);
         var searchStart = getLocalISOString(d);
@@ -717,7 +702,6 @@
           .from('appointments')
           .select('start_time, id')
           .eq('barber_id', BARBER_ID)
-          .eq('barber_name', barberName)
           .gte('start_time', searchStart);
         
         if (data) {
@@ -752,26 +736,27 @@
       }
 
       function renderProgressBar(currentStepIndex) {
-        const stepNames = ['ספר', 'שירות', 'יום', 'שעה', 'סיום'];
+        const stepNames = ['שירות', 'יום', 'שעה', 'סיום'];
         if (currentStepIndex === 'success') return;
         
+        var adjusted = currentStepIndex - 1;
         let html = '';
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 4; i++) {
           let stepClass = 'step-future';
-          if (i < currentStepIndex) stepClass = 'step-past';
-          if (i === currentStepIndex) stepClass = 'step-current';
+          if (i < adjusted) stepClass = 'step-past';
+          if (i === adjusted) stepClass = 'step-current';
 
           html += `
             <div class="flex items-center gap-1.5 shrink-0 ${stepClass}">
               <div class="prog-circle w-6 h-6 rounded-full border-2 flex items-center justify-center text-[11px] font-bold">
-                ${i < currentStepIndex ? '✓' : (i + 1)}
+                ${i < adjusted ? '✓' : (i + 1)}
               </div>
               <span class="prog-text text-xs">${stepNames[i]}</span>
             </div>
           `;
           
-          if (i < 4) {
-            let lineClass = (i < currentStepIndex) ? 'line-active' : '';
+          if (i < 3) {
+            let lineClass = (i < adjusted) ? 'line-active' : '';
             html += `<div class="h-px flex-grow border-t-2 border-dotted border-gray-200 min-w-[15px] mx-1 ${lineClass}"></div>`;
           }
         }
@@ -795,33 +780,13 @@
         document.getElementById('booking-step-' + n).classList.add('is-active');
         elements.title.textContent = personalState.isRescheduling ? 'שינוי תור: ' + STEP_TITLES[n] : STEP_TITLES[n];
 
-        if (n === 3) { fetchBookedSlots(state.selectedBarber.name).then(function(){ renderTimeSlots(); }); }
+        if (n === 3) { fetchBookedSlots().then(function(){ renderTimeSlots(); }); }
         if (n === 4) {
-          var sLabel = state.selectedService ? state.selectedService.nameHe + ' אצל ' + state.selectedBarber.name + ' • ' : '';
+          var sLabel = state.selectedService ? state.selectedService.nameHe + ' • ' : '';
           elements.summary.textContent = sLabel + dateKey(state.selectedDate).split('-').reverse().join('/') + ' בשעה ' + state.selectedTime.slice(11, 16);
           document.getElementById('summary-title-text').textContent = personalState.isRescheduling ? 'סיכום תור מעודכן' : 'סיכום תור';
           elements.submitBtn.textContent = personalState.isRescheduling ? 'עדכן תור' : 'אישור תור';
         }
-      }
-
-      function renderBarbers() {
-        elements.barbers.innerHTML = BARBERS.map(b => 
-          `<button type="button" class="barber-option w-full text-right py-4 px-5 rounded-xl border border-gray-200 bg-white flex justify-between items-center" data-name="${b.name}">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-full bg-brand-100 text-brand-900 flex items-center justify-center font-bold text-lg">${b.name.charAt(0)}</div>
-              <span class="font-bold text-brand-900">${b.name}</span>
-            </div>
-          </button>`
-        ).join('');
-        
-        elements.barbers.querySelectorAll('button').forEach(btn => {
-          btn.addEventListener('click', () => {
-            elements.barbers.querySelectorAll('button').forEach(b => b.classList.remove('selected'));
-            btn.classList.add('selected');
-            state.selectedBarber = BARBERS.find(b => b.name === btn.dataset.name);
-            updateButtonState(elements.nextBtn0, true);
-          });
-        });
       }
 
       function renderServices() {
@@ -914,9 +879,8 @@
 
       // פתיחת מודל התורים
       function openBookingModal(isReschedule = false) {
-        state = { selectedService: null, selectedBarber: null, viewMonth: new Date(today), selectedDate: null, selectedTime: null };
+        state = { selectedService: null, selectedBarber: DEFAULT_BARBER, viewMonth: new Date(today), selectedDate: null, selectedTime: null };
         elements.errorMsg.classList.add('hidden');
-        updateButtonState(elements.nextBtn0, false);
         updateButtonState(elements.nextBtn1, false);
         
         if(isReschedule && personalState.currentAppt) {
@@ -927,8 +891,7 @@
           document.getElementById('booking-form').reset();
         }
 
-        goToStep(0);
-        renderBarbers(); 
+        goToStep(1);
         renderServices();
         renderCalendar();
         bookingModal.classList.remove('hidden');
@@ -943,13 +906,10 @@
       document.getElementById('booking-cal-prev').addEventListener('click', () => { state.viewMonth.setMonth(state.viewMonth.getMonth() - 1); renderCalendar(); });
       document.getElementById('booking-cal-next').addEventListener('click', () => { state.viewMonth.setMonth(state.viewMonth.getMonth() + 1); renderCalendar(); });
       
-      elements.nextBtn0.addEventListener('click', () => goToStep(1));
-      document.getElementById('booking-step1-back').addEventListener('click', () => goToStep(0));
-      
       elements.nextBtn1.addEventListener('click', async () => {
         elements.nextBtn1.disabled = true;
         elements.nextBtn1.textContent = 'טוען יומן...';
-        await fetchBookedSlots(state.selectedBarber.name);
+        await fetchBookedSlots();
         elements.nextBtn1.textContent = 'המשך לתאריך';
         goToStep(2);
       });
@@ -1089,7 +1049,7 @@
         document.getElementById('personal-step-dash').classList.add('is-active');
 
         document.getElementById('pa-client-name').textContent = 'היי, ' + appt.client_name.split(' ')[0];
-        document.getElementById('pa-barber-service').textContent = (appt.service || 'תספורת') + ' אצל ' + (appt.barber_name || 'הספר');
+        document.getElementById('pa-barber-service').textContent = appt.service || 'תספורת';
         
         const dateObj = new Date(appt.start_time);
         const days = ['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
